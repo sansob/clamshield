@@ -1,0 +1,63 @@
+name: Prepare release
+
+# Run this by hand when dev is ready to ship. It bumps the version, dates the changelog
+# and opens a pull request from dev to main. Merging that pull request publishes the release.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version, for example 1.1.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Check the version
+        run: |
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Use a plain version like 1.2.3" >&2; exit 1
+          fi
+          if git rev-parse "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "v$VERSION already exists" >&2; exit 1
+          fi
+
+      - name: Bump the version and date the changelog
+        run: |
+          sed -i "s|<Version>.*</Version>|<Version>$VERSION</Version>|" src/Clamshield/Clamshield.csproj
+          TODAY=$(date -u +%Y-%m-%d)
+          awk -v v="$VERSION" -v d="$TODAY" '
+            /^## \[Unreleased\]/ && !done { print; print ""; print "## [" v "] - " d; done=1; next }
+            { print }
+          ' CHANGELOG.md > CHANGELOG.new && mv CHANGELOG.new CHANGELOG.md
+
+      - name: Commit to dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Release $VERSION"
+          git push origin dev
+
+      - name: Open the release pull request
+        run: |
+          if gh pr list --base main --head dev --state open --json number --jq '.[0].number' | grep -q .; then
+            echo "A pull request from dev to main is already open."
+          else
+            gh pr create --base main --head dev \
+              --title "Release v$VERSION" \
+              --body "Merging this publishes Clamshield $VERSION for Windows, macOS and Linux. The notes come from CHANGELOG.md."
+          fi

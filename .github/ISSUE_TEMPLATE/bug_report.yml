@@ -1,0 +1,49 @@
+name: Bug report
+description: Something does not work the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Please do not include private paths, your VirusTotal key or anything else you would not post in public. Security problems go through the Security tab instead, see SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Clamshield version
+      description: Settings, About
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, macOS, Linux]
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: Operating system version
+      description: For Linux, the distribution and desktop too
+      placeholder: "Ubuntu 24.04, GNOME"
+    validations:
+      required: true
+  - type: input
+    id: clamav
+    attributes:
+      label: ClamAV version
+      description: Tools, Engine details
+      placeholder: "ClamAV 1.4.6"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Steps to reproduce it, what you expected, and what you saw instead
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, or the relevant lines of the activity log (Settings, General, Open log file)
