@@ -51,9 +51,9 @@ public static class Cli
 
         var secs = (DateTime.Now - start).TotalSeconds;
         if (state.Error != null) { Console.Error.WriteLine(state.Error); return 2; }
-        var odd = running?.Where(r => r.Warning != null).Select(r => new { r.Pid, r.Name, r.Path, warning = r.Warning }).ToList();
+        var odd = running?.Where(r => r.Warning != null).Select(r => new CliSuspicious(r.Pid, r.Name, r.Path, r.Warning)).ToList();
         if (json)
-            Console.WriteLine(JsonSerializer.Serialize(new { scanned = state.Scanned, infected = threats.Count, seconds = Math.Round(secs, 1), threats = threats.Select(t => new { path = t.Path, virus = t.Virus }), suspiciousPrograms = odd }));
+            Console.WriteLine(JsonSerializer.Serialize(new CliResult(state.Scanned, threats.Count, Math.Round(secs, 1), threats.Select(t => new CliThreat(t.Path, t.Virus)).ToList(), odd), AppJson.Info<CliResult>()));
         else Console.WriteLine($"Scanned {state.Scanned:N0} files in {secs:0.#}s, {threats.Count} threat(s).");
         return threats.Count > 0 ? 1 : 0;
     }

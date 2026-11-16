@@ -61,7 +61,7 @@ public static class AppData
     }
     public static T Load<T>(string file) where T : new()
     {
-        try { var p = Path.Combine(Dir, file); return File.Exists(p) ? JsonSerializer.Deserialize<T>(File.ReadAllText(p)) ?? new T() : new T(); }
+        try { var p = Path.Combine(Dir, file); return File.Exists(p) ? JsonSerializer.Deserialize(File.ReadAllText(p), AppJson.Info<T>()) ?? new T() : new T(); }
         catch { return new T(); }
     }
     public static void Save<T>(string file, T value)
@@ -70,7 +70,7 @@ public static class AppData
         {
             EnsureDir(Dir);
             var path = Path.Combine(Dir, file);
-            File.WriteAllText(path, JsonSerializer.Serialize(value));
+            File.WriteAllText(path, JsonSerializer.Serialize(value, AppJson.Info<T>()));
             Secure(path);
         }
         catch { }

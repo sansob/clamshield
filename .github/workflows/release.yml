@@ -60,7 +60,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { rid: linux-x64,   os: ubuntu-latest }
+          - { rid: linux-x64,   os: ubuntu-latest, aot: true }
           - { rid: linux-arm64, os: ubuntu-latest }
           - { rid: win-x64,     os: windows-latest }
           - { rid: win-arm64,   os: windows-latest }
@@ -74,7 +74,20 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Native toolchain (AOT)
+        if: matrix.aot
+        run: sudo apt-get update && sudo apt-get install -y clang zlib1g-dev
+
+      - name: Publish (native AOT)
+        if: matrix.aot
+        shell: bash
+        run: >
+          dotnet publish src/Clamshield/Clamshield.csproj
+          --configuration Release --runtime ${{ matrix.rid }} -p:PublishAot=true
+          -p:Version=$VERSION -p:DebugType=None -p:DebugSymbols=false --output publish
+
       - name: Publish
+        if: ${{ !matrix.aot }}
         shell: bash
         run: >
           dotnet publish src/Clamshield/Clamshield.csproj
