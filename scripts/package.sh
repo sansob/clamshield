@@ -65,16 +65,24 @@ PLIST
     if command -v codesign >/dev/null 2>&1; then
       codesign --force --deep --sign - "$APP"
     fi
+    MADE_DMG=0
     if command -v hdiutil >/dev/null 2>&1; then
       DMG="$WORK/dmg"
       mkdir -p "$DMG"
-      cp -a "$APP" "$DMG/"
+      mv "$APP" "$DMG/"
       ln -s /Applications "$DMG/Applications"
-      hdiutil create -volname "Clamshield" -srcfolder "$DMG" -ov -format UDZO "$OUT/$NAME.dmg"
-      echo "created $OUT/$NAME.dmg"
-    else
+      # hdiutil sizes the image itself and can come up short ("No space left on device"), so give it room.
+      MB=$(( $(du -sm "$DMG" | cut -f1) * 13 / 10 + 40 ))
+      if hdiutil create -size "${MB}m" -fs HFS+ -volname "Clamshield" -srcfolder "$DMG" -ov -format UDZO "$OUT/$NAME.dmg"; then
+        echo "created $OUT/$NAME.dmg"; MADE_DMG=1
+      else
+        echo "hdiutil failed, falling back to a zip" >&2
+        mv "$DMG/Clamshield.app" "$WORK/"
+      fi
+    fi
+    if [ "$MADE_DMG" -eq 0 ]; then
       (cd "$WORK" && zip -qry "$OUT/$NAME.app.zip" Clamshield.app)
-      echo "created $OUT/$NAME.app.zip (hdiutil not available)"
+      echo "created $OUT/$NAME.app.zip"
     fi
     ;;
 
