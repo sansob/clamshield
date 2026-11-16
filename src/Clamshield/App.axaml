@@ -1,0 +1,300 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Clamshield.App"
+             RequestedThemeVariant="Light">
+
+  <Application.Resources>
+    <ResourceDictionary>
+    <ResourceDictionary.ThemeDictionaries>
+      <ResourceDictionary x:Key="Light">
+        <SolidColorBrush x:Key="TextMain" Color="#1B2336"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#6B7488"/>
+        <SolidColorBrush x:Key="NavText" Color="#4A5468"/>
+        <SolidColorBrush x:Key="BgApp" Color="#F3F5F9"/>
+        <SolidColorBrush x:Key="BgSidebar" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BgCard" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="Surface2" Color="#F6F8FC"/>
+        <SolidColorBrush x:Key="Surface3" Color="#EEF1F7"/>
+        <SolidColorBrush x:Key="Surface3Hover" Color="#E2E7F1"/>
+        <SolidColorBrush x:Key="BorderSoft" Color="#E6EAF2"/>
+        <SolidColorBrush x:Key="TabBar" Color="#E7EAF2"/>
+        <SolidColorBrush x:Key="LogBg" Color="#1B2336"/>
+        <SolidColorBrush x:Key="DragOverlay" Color="#EEFFFFFF"/>
+        <SolidColorBrush x:Key="TintOrange" Color="#1FFF7800"/>
+        <SolidColorBrush x:Key="TintGreen" Color="#1F0FB872"/>
+        <SolidColorBrush x:Key="TintBlue" Color="#1F4C6FFF"/>
+        <SolidColorBrush x:Key="TintRed" Color="#1FE5364B"/>
+        <SolidColorBrush x:Key="TintRedHover" Color="#33E5364B"/>
+      </ResourceDictionary>
+      <ResourceDictionary x:Key="Dark">
+        <SolidColorBrush x:Key="TextMain" Color="#EEF2FA"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#8F9AB0"/>
+        <SolidColorBrush x:Key="NavText" Color="#A9B3C8"/>
+        <SolidColorBrush x:Key="BgApp" Color="#0E1420"/>
+        <SolidColorBrush x:Key="BgSidebar" Color="#121A2A"/>
+        <SolidColorBrush x:Key="BgCard" Color="#172033"/>
+        <SolidColorBrush x:Key="Surface2" Color="#1E2840"/>
+        <SolidColorBrush x:Key="Surface3" Color="#243049"/>
+        <SolidColorBrush x:Key="Surface3Hover" Color="#2E3B58"/>
+        <SolidColorBrush x:Key="BorderSoft" Color="#25304A"/>
+        <SolidColorBrush x:Key="TabBar" Color="#0B101B"/>
+        <SolidColorBrush x:Key="LogBg" Color="#0A0F1A"/>
+        <SolidColorBrush x:Key="DragOverlay" Color="#EE0E1420"/>
+        <SolidColorBrush x:Key="TintOrange" Color="#1FFF7800"/>
+        <SolidColorBrush x:Key="TintGreen" Color="#1F0FB872"/>
+        <SolidColorBrush x:Key="TintBlue" Color="#1F4C6FFF"/>
+        <SolidColorBrush x:Key="TintRed" Color="#1FE5364B"/>
+        <SolidColorBrush x:Key="TintRedHover" Color="#33E5364B"/>
+      </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+    <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0%,0%" EndPoint="100%,100%">
+      <GradientStop Color="#FFA24D" Offset="0"/><GradientStop Color="#FF6A00" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PrimaryGradientHover" StartPoint="0%,0%" EndPoint="100%,100%">
+      <GradientStop Color="#FFB26B" Offset="0"/><GradientStop Color="#FF7A1A" Offset="1"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="#FF7800"/>
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="#FF7800"/>
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="#FF7800"/>
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="#FF7800"/>
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" Color="#FF7800"/>
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPressed" Color="#FF7800"/>
+    <FontFamily x:Key="ContentControlThemeFontFamily">avares://Clamshield/Assets/Fonts#Plus Jakarta Sans</FontFamily>
+    <StreamGeometry x:Key="IconShield">F0 M12 2 L4 5 V11 C4 16 7.5 20.5 12 22 C16.5 20.5 20 16 20 11 V5 Z M8.2 12.2 L10.8 14.8 L15.8 9.4 L14.6 8.3 L10.8 12.4 L9.4 11 Z</StreamGeometry>
+    <StreamGeometry x:Key="IconHome">M12 3 L2 12 H5 V20 H10 V14 H14 V20 H19 V12 H22 Z</StreamGeometry>
+    <StreamGeometry x:Key="IconSearch">M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z</StreamGeometry>
+    <StreamGeometry x:Key="IconLock">M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z</StreamGeometry>
+    <StreamGeometry x:Key="IconRefresh">M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z</StreamGeometry>
+    <StreamGeometry x:Key="IconBolt">M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.43 0 .58.32.45.64L11 21z</StreamGeometry>
+    <StreamGeometry x:Key="IconFolder">M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z</StreamGeometry>
+    <StreamGeometry x:Key="IconWrench">M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z</StreamGeometry>
+    <StreamGeometry x:Key="IconTrash">M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z</StreamGeometry>
+    <StreamGeometry x:Key="IconInfo">M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z</StreamGeometry>
+    <StreamGeometry x:Key="IconLink">M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z</StreamGeometry>
+    <StreamGeometry x:Key="IconKey">M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z</StreamGeometry>
+    <StreamGeometry x:Key="IconPower">M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z</StreamGeometry>
+    <StreamGeometry x:Key="IconStorage">M2 20h20v-4H2v4zm2-3h2v2H4v-2zM2 4v4h20V4H2zm4 3H4V5h2v2zm-4 7h20v-4H2v4zm2-3h2v2H4v-2z</StreamGeometry>
+    <StreamGeometry x:Key="IconChip">M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z</StreamGeometry>
+    <StreamGeometry x:Key="IconBlock">M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z</StreamGeometry>
+    <StreamGeometry x:Key="IconArrow">M4 11 H16.2 L10.6 5.4 L12 4 L20 12 L12 20 L10.6 18.6 L16.2 13 H4 Z</StreamGeometry>
+    <StreamGeometry x:Key="IconClock">M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z</StreamGeometry>
+    <StreamGeometry x:Key="IconGear">M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z</StreamGeometry>
+    <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="#FF7800"/>
+    <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="#FF8F2E"/>
+    <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="#E56A00"/>
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="#FF7800"/>
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="#FF8F2E"/>
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="#E56A00"/>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <Style Selector="Window"><Setter Property="FontFamily" Value="avares://Clamshield/Assets/Fonts#Plus Jakarta Sans"/></Style>
+
+    <Style Selector="TextBlock.h1"><Setter Property="FontSize" Value="28"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="TextBlock.h2"><Setter Property="FontSize" Value="16"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="TextBlock.muted"><Setter Property="Foreground" Value="{DynamicResource TextMuted}"/><Setter Property="FontSize" Value="13"/></Style>
+
+    <Style Selector="Border.card">
+      <Setter Property="Background" Value="{DynamicResource BgCard}"/>
+      <Setter Property="CornerRadius" Value="18"/>
+      <Setter Property="Padding" Value="20"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BoxShadow" Value="0 6 20 0 #120F1B3A"/>
+    </Style>
+    <Style Selector="Border.iconbadge"><Setter Property="Width" Value="46"/><Setter Property="Height" Value="46"/><Setter Property="CornerRadius" Value="14"/><Setter Property="HorizontalAlignment" Value="Left"/></Style>
+
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="{DynamicResource PrimaryGradient}"/><Setter Property="Foreground" Value="White"/>
+      <Setter Property="FontWeight" Value="Bold"/><Setter Property="FontSize" Value="15"/>
+      <Setter Property="Padding" Value="28,14"/><Setter Property="CornerRadius" Value="12"/><Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="RenderTransform" Value="scale(1)"/><Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Setter Property="Transitions"><Transitions><TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Button.primary:pointerover"><Setter Property="RenderTransform" Value="scale(1.05)"/></Style>
+    <Style Selector="Button.primary:pressed"><Setter Property="RenderTransform" Value="scale(0.96)"/></Style>
+    <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource PrimaryGradientHover}"/><Setter Property="Foreground" Value="White"/></Style>
+    <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource PrimaryGradient}"/><Setter Property="Foreground" Value="White"/></Style>
+    <Style Selector="Button.primary:disabled /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource Surface3}"/><Setter Property="Foreground" Value="{DynamicResource TextMuted}"/></Style>
+
+    <Style Selector="Button.cta">
+      <Setter Property="Background" Value="White"/><Setter Property="Foreground" Value="#1B2336"/>
+      <Setter Property="FontWeight" Value="Bold"/><Setter Property="FontSize" Value="15"/>
+      <Setter Property="Padding" Value="28,14"/><Setter Property="CornerRadius" Value="12"/><Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="RenderTransform" Value="scale(1)"/><Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Setter Property="Transitions"><Transitions><TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Button.cta:pointerover"><Setter Property="RenderTransform" Value="scale(1.05)"/></Style>
+    <Style Selector="Button.cta:pressed"><Setter Property="RenderTransform" Value="scale(0.96)"/></Style>
+    <Style Selector="Button.cta:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="#F3F5F9"/><Setter Property="Foreground" Value="#1B2336"/></Style>
+
+    <Style Selector="Button.ghost">
+      <Setter Property="Background" Value="{DynamicResource Surface3}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/><Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Padding" Value="18,11"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.ghost:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource Surface3Hover}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="{DynamicResource TintRed}"/><Setter Property="Foreground" Value="#D6283B"/><Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Padding" Value="18,11"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource TintRedHover}"/><Setter Property="Foreground" Value="#B91C2E"/></Style>
+
+    <Style Selector="Button.tile">
+      <Setter Property="Background" Value="{DynamicResource BgCard}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+      <Setter Property="CornerRadius" Value="18"/><Setter Property="Padding" Value="20"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="RenderTransform" Value="scale(1)"/><Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Setter Property="Transitions"><Transitions><TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.18" Easing="CubicEaseOut"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Button.tile:pointerover"><Setter Property="RenderTransform" Value="translateY(-5px) scale(1.02)"/></Style>
+    <Style Selector="Button.tile:pressed"><Setter Property="RenderTransform" Value="scale(0.97)"/></Style>
+    <Style Selector="Button.tile:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource BgCard}"/><Setter Property="BorderBrush" Value="#FFB070"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/><Setter Property="BoxShadow" Value="0 14 30 0 #26FF7800"/></Style>
+
+
+    <!-- translucent button on colored hero -->
+    <Style Selector="Button.onhero">
+      <Setter Property="Background" Value="#33FFFFFF"/><Setter Property="Foreground" Value="White"/><Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Padding" Value="22,13"/><Setter Property="CornerRadius" Value="12"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.onhero:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="#55FFFFFF"/><Setter Property="Foreground" Value="White"/></Style>
+
+    <!-- segmented tabs -->
+    <Style Selector="Button.tab">
+      <Setter Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="{DynamicResource TextMuted}"/><Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Padding" Value="22,10"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.tab:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource BgApp}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="Button.tab.active /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource BgCard}"/><Setter Property="Foreground" Value="#FF7800"/><Setter Property="BoxShadow" Value="0 2 8 0 #1A0F1B3A"/></Style>
+
+    <Style Selector="Border.dot">
+      <Setter Property="Width" Value="10"/><Setter Property="Height" Value="8"/><Setter Property="CornerRadius" Value="4"/><Setter Property="Background" Value="{DynamicResource Surface3Hover}"/>
+      <Setter Property="Transitions"><Transitions><DoubleTransition Property="Width" Duration="0:0:0.3"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Border.dot.active"><Setter Property="Width" Value="30"/><Setter Property="Background" Value="#FF7800"/></Style>
+
+
+    <!-- settings: vertical category list and tidy rows -->
+    <Style Selector="Button.stab">
+      <Setter Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="{DynamicResource NavText}"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="14,11"/><Setter Property="CornerRadius" Value="10"/><Setter Property="FontSize" Value="14"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.stab:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource BgApp}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="Button.stab.active /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource TintOrange}"/><Setter Property="Foreground" Value="#FF7800"/></Style>
+    <Style Selector="Border.row">
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/><Setter Property="BorderThickness" Value="0,0,0,1"/><Setter Property="Padding" Value="0,14"/>
+    </Style>
+    <Style Selector="Border.row:nth-last-child(1)"><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="0,14,0,0"/></Style>
+
+
+    <!-- inputs follow the theme instead of the stark default outline -->
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="{DynamicResource Surface2}"/><Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/>
+      <Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="14,11"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement"><Setter Property="BorderBrush" Value="#FF7800"/><Setter Property="Background" Value="{DynamicResource Surface2}"/></Style>
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement"><Setter Property="Background" Value="{DynamicResource Surface2}"/><Setter Property="BorderBrush" Value="{DynamicResource Surface3Hover}"/></Style>
+    <Style Selector="ComboBox">
+      <Setter Property="Background" Value="{DynamicResource Surface2}"/><Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/>
+      <Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="14,9"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/>
+    </Style>
+    <Style Selector="ComboBox:pointerover /template/ Border#Background"><Setter Property="Background" Value="{DynamicResource Surface3}"/><Setter Property="BorderBrush" Value="{DynamicResource Surface3Hover}"/></Style>
+
+    <!-- tiles fill their row so neighbours line up -->
+    <Style Selector="Button.tile"><Setter Property="VerticalAlignment" Value="Stretch"/><Setter Property="VerticalContentAlignment" Value="Stretch"/></Style>
+
+    <!-- soft press feedback on secondary buttons -->
+    <Style Selector="Button.ghost, Button.danger">
+      <Setter Property="RenderTransform" Value="scale(1)"/><Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Setter Property="Transitions"><Transitions><TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.12"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Button.ghost:pressed, Button.danger:pressed"><Setter Property="RenderTransform" Value="scale(0.96)"/></Style>
+
+    <!-- progress values glide instead of jumping -->
+    <Style Selector="ProgressBar /template/ Border#PART_Indicator">
+      <Setter Property="Transitions"><Transitions><DoubleTransition Property="Width" Duration="0:0:0.3" Easing="CubicEaseOut"/></Transitions></Setter>
+    </Style>
+    <Style Selector="Arc">
+      <Setter Property="Transitions"><Transitions><DoubleTransition Property="SweepAngle" Duration="0:0:0.45" Easing="CubicEaseOut"/></Transitions></Setter>
+    </Style>
+
+    <!-- list rows slide in when they appear -->
+    <Style Selector="Control.enter">
+      <Style.Animations>
+        <Animation Duration="0:0:0.35" Easing="CubicEaseOut" FillMode="Both">
+          <KeyFrame Cue="0%"><Setter Property="Opacity" Value="0"/><Setter Property="TranslateTransform.X" Value="-14"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1"/><Setter Property="TranslateTransform.X" Value="0"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+
+    <Style Selector="Button.nav">
+      <Setter Property="Background" Value="Transparent"/><Setter Property="Foreground" Value="{DynamicResource NavText}"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="16,13"/><Setter Property="CornerRadius" Value="12"/><Setter Property="FontSize" Value="14"/><Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="Button.nav:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource BgApp}"/><Setter Property="Foreground" Value="{DynamicResource TextMain}"/></Style>
+    <Style Selector="Button.nav.active /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource TintOrange}"/><Setter Property="Foreground" Value="#FF7800"/></Style>
+
+    <Style Selector="Control.page[IsVisible=True]">
+      <Style.Animations>
+        <Animation Duration="0:0:0.45" Easing="CubicEaseOut" FillMode="Both">
+          <KeyFrame Cue="0%"><Setter Property="Opacity" Value="0"/><Setter Property="TranslateTransform.Y" Value="22"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1"/><Setter Property="TranslateTransform.Y" Value="0"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+
+    <Style Selector="Ellipse.pulse">
+      <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Style.Animations>
+        <Animation Duration="0:0:2.8" IterationCount="Infinite" Easing="CubicEaseOut">
+          <KeyFrame Cue="0%"><Setter Property="ScaleTransform.ScaleX" Value="1"/><Setter Property="ScaleTransform.ScaleY" Value="1"/><Setter Property="Opacity" Value="0.6"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="ScaleTransform.ScaleX" Value="1.8"/><Setter Property="ScaleTransform.ScaleY" Value="1.8"/><Setter Property="Opacity" Value="0"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="Ellipse.pulse2">
+      <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Style.Animations>
+        <Animation Duration="0:0:2.8" Delay="0:0:1.4" IterationCount="Infinite" Easing="CubicEaseOut">
+          <KeyFrame Cue="0%"><Setter Property="ScaleTransform.ScaleX" Value="1"/><Setter Property="ScaleTransform.ScaleY" Value="1"/><Setter Property="Opacity" Value="0.6"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="ScaleTransform.ScaleX" Value="1.8"/><Setter Property="ScaleTransform.ScaleY" Value="1.8"/><Setter Property="Opacity" Value="0"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="Path.breathe">
+      <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Style.Animations>
+        <Animation Duration="0:0:3" IterationCount="Infinite" Easing="SineEaseInOut">
+          <KeyFrame Cue="0%"><Setter Property="ScaleTransform.ScaleX" Value="1"/><Setter Property="ScaleTransform.ScaleY" Value="1"/></KeyFrame>
+          <KeyFrame Cue="50%"><Setter Property="ScaleTransform.ScaleX" Value="1.08"/><Setter Property="ScaleTransform.ScaleY" Value="1.08"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="ScaleTransform.ScaleX" Value="1"/><Setter Property="ScaleTransform.ScaleY" Value="1"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="Ellipse.spin">
+      <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Style.Animations>
+        <Animation Duration="0:0:1.6" IterationCount="Infinite">
+          <KeyFrame Cue="0%"><Setter Property="RotateTransform.Angle" Value="0"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="RotateTransform.Angle" Value="360"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="Ellipse.spinrev">
+      <Setter Property="RenderTransformOrigin" Value="50%,50%"/>
+      <Style.Animations>
+        <Animation Duration="0:0:3.2" IterationCount="Infinite">
+          <KeyFrame Cue="0%"><Setter Property="RotateTransform.Angle" Value="360"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="RotateTransform.Angle" Value="0"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+  </Application.Styles>
+</Application>

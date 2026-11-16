@@ -1,0 +1,19 @@
+# build output
+bin/
+obj/
+publish/
+dist/
+TestResults/
+*.trx
+
+# IDEs and tools
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.DotSettings.user
+
+# operating systems
+.DS_Store
+Thumbs.db

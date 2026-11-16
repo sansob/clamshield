@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Clamshield/Clamshield.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Clamshield.Tests/Clamshield.Tests.csproj" />
+  </Folder>
+</Solution>

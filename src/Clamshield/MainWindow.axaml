@@ -1,0 +1,1159 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Clamshield.ViewModels"
+        xmlns:loc="using:Clamshield.Services"
+        x:Class="Clamshield.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Clamshield" Width="1100" Height="740" MinWidth="920" MinHeight="620"
+        Icon="/Assets/icon.png" Background="{DynamicResource BgApp}" WindowStartupLocation="CenterScreen">
+
+  <Grid ColumnDefinitions="232,*">
+
+    <Border Background="{DynamicResource BgSidebar}" BorderBrush="{DynamicResource BorderSoft}" BorderThickness="0,0,1,0" Padding="18,24">
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="12" Margin="6,0,0,32">
+          <Image Source="/Assets/icon.png" Width="42" Height="42"/>
+          <TextBlock Text="Clamshield" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextMain}" VerticalAlignment="Center"/>
+        </StackPanel>
+        <Button DockPanel.Dock="Bottom" Classes="nav" Classes.active="{Binding IsSettings}" Click="NavSettings">
+          <StackPanel Orientation="Horizontal" Spacing="14"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconGear}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [settings], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+        </Button>
+        <StackPanel Spacing="6">
+          <Button Classes="nav" Classes.active="{Binding IsHome}" Click="NavHome">
+            <StackPanel Orientation="Horizontal" Spacing="14"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconHome}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [overview], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+          </Button>
+          <Button Classes="nav" Classes.active="{Binding IsScan}" Click="NavScan">
+            <StackPanel Orientation="Horizontal" Spacing="14"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconSearch}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [scan], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+          </Button>
+          <Button Classes="nav" Classes.active="{Binding IsTools}" Click="NavTools">
+            <StackPanel Orientation="Horizontal" Spacing="14"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconWrench}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [tools], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+          </Button>
+          <Button Classes="nav" Classes.active="{Binding IsUpdate}" Click="NavUpdate">
+            <StackPanel Orientation="Horizontal" Spacing="14"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconRefresh}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [updates], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+          </Button>
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <Grid Grid.Column="1" Margin="36,32">
+
+      <!-- HOME -->
+      <ScrollViewer Margin="-14,-10,0,0" Padding="14,10,14,0" Classes="page" IsVisible="{Binding IsHome}">
+        <StackPanel Spacing="22">
+
+          <Border Background="{Binding HeroGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+            <Grid>
+              <Ellipse Width="340" Height="340" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
+              <Ellipse Width="220" Height="220" Fill="White" Opacity="0.07" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,230,-110"/>
+              <Grid ColumnDefinitions="*,Auto" Margin="40,36">
+                <StackPanel Spacing="12" VerticalAlignment="Center">
+                  <Border Background="#33FFFFFF" CornerRadius="20" Padding="12,5" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding [protection_status], Source={x:Static loc:Loc.I}}" Foreground="White" FontSize="11" FontWeight="Bold" LetterSpacing="1"/>
+                  </Border>
+                  <TextBlock Text="{Binding HeroTitle}" Foreground="White" FontSize="32" FontWeight="Bold" TextWrapping="Wrap"/>
+                  <TextBlock Text="{Binding HeroSubtitle}" Foreground="#E6FFFFFF" FontSize="15" TextWrapping="Wrap" MaxWidth="460" HorizontalAlignment="Left"/>
+                  <Border BoxShadow="0 10 24 0 #33000000" CornerRadius="12" HorizontalAlignment="Left" Margin="0,10,0,0">
+                    <Button Classes="cta" Click="OnSmartScan">
+                      <StackPanel Orientation="Horizontal" Spacing="10"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconBolt}" Fill="#FF7800" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [run_smart_scan], Source={x:Static loc:Loc.I}}"/></StackPanel>
+                    </Button>
+                  </Border>
+                </StackPanel>
+                <Grid Grid.Column="1" Width="170" Height="170" Margin="24,0,10,0">
+                  <Ellipse Stroke="White" StrokeThickness="2"/>
+                  <Ellipse Stroke="White" StrokeThickness="2"/>
+                  <Ellipse Fill="#26FFFFFF" Stroke="#55FFFFFF" StrokeThickness="2"/>
+                  <Viewbox Width="84" Height="84"><Path Data="{Binding HeroIcon}" Fill="White" Stretch="Uniform"/></Viewbox>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Border>
+
+          <Border Classes="card" IsVisible="{Binding ShowDefsBanner}" Background="{DynamicResource TintOrange}" BorderBrush="#66FF7800">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+              <Border Classes="iconbadge" Background="#33FF7800" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconRefresh}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock Text="{Binding DefsBannerTitle}" Foreground="{DynamicResource TextMain}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [new_threats_show_up_daily_update_to_stay_covered], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/>
+              </StackPanel>
+              <Button Grid.Column="2" Classes="primary" Content="{Binding [update_now], Source={x:Static loc:Loc.I}}" Click="OnDefsUpdate" Margin="16,0,0,0"/>
+            </Grid>
+          </Border>
+
+          <Border Classes="card" Padding="0" ClipToBounds="True">
+            <StackPanel>
+              <Grid ColumnDefinitions="Auto,*,Auto" Margin="24,22,24,18">
+                <Grid Width="48" Height="48" Margin="0,0,18,0" VerticalAlignment="Center">
+                  <Ellipse Stroke="#0FB872" StrokeThickness="2" IsVisible="{Binding RealTimeEnabled}"/>
+                  <Border Classes="iconbadge" Background="{DynamicResource TintGreen}" HorizontalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconBolt}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+                </Grid>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+                  <TextBlock Text="{Binding [real_time_protection], Source={x:Static loc:Loc.I}}" Classes="h2"/>
+                  <TextBlock Text="{Binding RealTimeStatus}" Classes="muted" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                  <Border CornerRadius="14" Padding="12,6" VerticalAlignment="Center" Background="{Binding RtBadgeBg}">
+                  <StackPanel Orientation="Horizontal" Spacing="8"><Ellipse Width="8" Height="8" Fill="{Binding RtBadgeColor}" VerticalAlignment="Center"/><TextBlock Text="{Binding RtBadgeText}" Foreground="{Binding RtBadgeColor}" FontSize="12" FontWeight="SemiBold"/></StackPanel>
+                </Border>
+                </StackPanel>
+              </Grid>
+
+              <Border Margin="24,0,24,20" IsVisible="{Binding IsPaused}" Background="{DynamicResource TintOrange}" CornerRadius="12" Padding="16,12">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Text="{Binding PauseText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                  <Button Grid.Column="1" Classes="primary" Content="{Binding [resume], Source={x:Static loc:Loc.I}}" Click="OnResumeProtection" Padding="20,8" Margin="12,0,0,0"/>
+                </Grid>
+              </Border>
+              <Border Margin="24,0,24,22" IsVisible="{Binding !RealTimeEnabled}">
+                <Button Classes="ghost" Content="{Binding [go_to_settings], Source={x:Static loc:Loc.I}}" Click="OnGoRealTimeSettings" HorizontalAlignment="Left"/>
+              </Border>
+              <StackPanel IsVisible="{Binding ShowRtDetails}">
+                <Border Background="{DynamicResource Surface2}" Padding="24,14">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                      <TextBlock Text="{Binding [now_checking], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/>
+                      <TextBlock Text="{Binding RtNowText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                      <TextBlock Text="{Binding RtNowFolder}" Classes="muted" FontSize="13" TextTrimming="CharacterEllipsis" IsVisible="{Binding RtBusy}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="16,0,0,0">
+                <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,9" MinWidth="86">
+                  <StackPanel Spacing="0"><TextBlock Text="{Binding [queued], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/><TextBlock Text="{Binding RtPendingText}" Foreground="{DynamicResource TextMain}" FontSize="17" FontWeight="Bold"/></StackPanel>
+                </Border>
+                <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,9" MinWidth="86">
+                  <StackPanel Spacing="0"><TextBlock Text="{Binding [checked], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/><TextBlock Text="{Binding RtCheckedText}" Foreground="{DynamicResource TextMain}" FontSize="17" FontWeight="Bold"/></StackPanel>
+                </Border>
+                <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,9" MinWidth="86">
+                  <StackPanel Spacing="0"><TextBlock Text="{Binding [blocked], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/><TextBlock Text="{Binding RtBlockedText}" Foreground="#E5364B" FontSize="17" FontWeight="Bold"/></StackPanel>
+                </Border>
+                    </StackPanel>
+                  </Grid>
+                </Border>
+                <ProgressBar IsIndeterminate="True" IsVisible="{Binding RtBusy}" Height="3" Foreground="#0FB872" Background="Transparent" CornerRadius="0"/>
+
+                <StackPanel Margin="24,16,24,22" Spacing="10">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel VerticalAlignment="Center" Spacing="1"><TextBlock Text="{Binding [activity_log], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [light_on_your_system_low_priority_small_batches], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/></StackPanel>
+                    <Button Grid.Column="1" Classes="ghost" Content="{Binding [clear], Source={x:Static loc:Loc.I}}" Click="OnClearRtLog" Padding="12,6"/>
+                  </Grid>
+                  <TextBlock Text="{Binding [nothing_yet_new_files_will_show_up_here_as_they_re_check], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasRtLog}" Margin="0,6"/>
+                  <ScrollViewer MaxHeight="210" IsVisible="{Binding HasRtLog}">
+                    <ItemsControl ItemsSource="{Binding RtLog}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Grid Classes="enter" ColumnDefinitions="Auto,*,Auto" Margin="0,0,10,0">
+                            <Border Grid.ColumnSpan="3" Height="1" VerticalAlignment="Bottom" Background="{DynamicResource BorderSoft}"/>
+                            <TextBlock Text="{Binding TimeText}" Classes="muted" FontSize="13" VerticalAlignment="Center" Width="64" Margin="0,9"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="4,7">
+                              <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                              <TextBlock Text="{Binding Sub}" Classes="muted" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                            <Border Grid.Column="2" CornerRadius="10" Padding="10,4" VerticalAlignment="Center" Background="{Binding Badge}">
+                              <TextBlock Text="{Binding ResultText}" Foreground="{Binding Color}" FontSize="12" FontWeight="SemiBold"/>
+                            </Border>
+                          </Grid>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ScrollViewer>
+                </StackPanel>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+
+          <UniformGrid Columns="2" Margin="-6,0">
+            <Border Classes="card" Margin="6">
+              <StackPanel Spacing="14">
+                <Grid ColumnDefinitions="Auto,*">
+                  <Grid Width="92" Height="92" Margin="0,0,18,0">
+                    <Ellipse Stroke="#1F808080" StrokeThickness="9"/>
+                    <Arc StartAngle="-90" SweepAngle="{Binding HealthAngle}" Stroke="{Binding HealthBrush}" StrokeThickness="9" StrokeLineCap="Round"/>
+                    <TextBlock Text="{Binding HealthScoreText}" Foreground="{DynamicResource TextMain}" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                  </Grid>
+                  <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+                    <TextBlock Text="{Binding [security_health], Source={x:Static loc:Loc.I}}" Classes="muted"/>
+                    <TextBlock Text="{Binding HealthLabel}" Foreground="{Binding HealthBrush}" FontSize="22" FontWeight="Bold"/>
+                  </StackPanel>
+                </Grid>
+                <ItemsControl ItemsSource="{Binding Health}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,10" Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="*,Auto">
+                          <StackPanel Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding Title}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock Text="{Binding Hint}" Classes="muted" FontSize="13" TextWrapping="Wrap"/></StackPanel>
+                          <Button Grid.Column="1" Classes="ghost" Content="{Binding ActionText}" Click="OnFixHealth" Padding="14,7" Margin="12,0,0,0"/>
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding !HasHealthIssues}">
+                  <Viewbox Width="18" Height="18"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox>
+                  <TextBlock Text="{Binding [everything_looks_great], Source={x:Static loc:Loc.I}}" Classes="muted" VerticalAlignment="Center"/>
+                </StackPanel>
+              </StackPanel>
+            </Border>
+            <Border Classes="card" Margin="6">
+              <StackPanel Spacing="14">
+                <TextBlock Text="{Binding [last_7_days], Source={x:Static loc:Loc.I}}" Classes="h2"/>
+                <UniformGrid Columns="2">
+                  <StackPanel><TextBlock Text="{Binding WeekFiles, StringFormat={}{0:N0}}" Foreground="{DynamicResource TextMain}" FontSize="26" FontWeight="Bold"/><TextBlock Text="{Binding [files_checked], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
+                  <StackPanel><TextBlock Text="{Binding WeekThreats}" Foreground="#E5364B" FontSize="26" FontWeight="Bold"/><TextBlock Text="{Binding [threats_found], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
+                </UniformGrid>
+                <ItemsControl ItemsSource="{Binding Week}" Height="140">
+                  <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel VerticalAlignment="Bottom" Spacing="6" Margin="3,0">
+                        <Ellipse Width="6" Height="6" Fill="#E5364B" IsVisible="{Binding HasThreat}"/>
+                        <Border Height="{Binding BarHeight}" Width="24" CornerRadius="7" HorizontalAlignment="Center" Background="{DynamicResource PrimaryGradient}"/>
+                        <TextBlock Text="{Binding Label}" Classes="muted" FontSize="12" HorizontalAlignment="Center"/>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </Border>
+          </UniformGrid>
+        </StackPanel>
+      </ScrollViewer>
+
+      <!-- SCAN -->
+      <ScrollViewer Margin="-14,-10,0,0" Padding="14,10,14,0" Classes="page" IsVisible="{Binding IsScan}">
+        <StackPanel Spacing="20">
+
+          <!-- chooser (no scan running) -->
+          <StackPanel IsVisible="{Binding IsIdle}" Spacing="18">
+            <StackPanel Spacing="4"><TextBlock Text="{Binding [scan], Source={x:Static loc:Loc.I}}" Classes="h1"/><TextBlock Text="{Binding [choose_what_you_d_like_to_check_you_can_also_drag_files_], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
+            <Border Background="{DynamicResource PrimaryGradient}" CornerRadius="22" Padding="32" BoxShadow="0 14 30 0 #33FF7800">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="6" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding [smart_scan], Source={x:Static loc:Loc.I}}" Foreground="White" FontSize="24" FontWeight="Bold"/>
+                  <TextBlock Text="{Binding [the_fastest_way_to_check_the_places_malware_hides_most_o], Source={x:Static loc:Loc.I}}" Foreground="#E6FFFFFF" FontSize="14" TextWrapping="Wrap"/>
+                </StackPanel>
+                <Button Grid.Column="1" Classes="cta" Click="OnSmartScan"><StackPanel Orientation="Horizontal" Spacing="10"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconBolt}" Fill="#FF7800" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [start], Source={x:Static loc:Loc.I}}"/></StackPanel></Button>
+              </Grid>
+            </Border>
+            <UniformGrid x:Name="ScanTilesGrid" Columns="2" Margin="-6,0">
+              <Button Classes="tile" Click="OnQuickScan" Margin="6">
+                <StackPanel Spacing="14">
+                  <Border Classes="iconbadge" Background="{DynamicResource TintOrange}"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconBolt}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                  <StackPanel Spacing="4"><TextBlock Text="{Binding [quick_scan], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [downloads_desktop_and_documents], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                </StackPanel>
+              </Button>
+              <Button Classes="tile" Click="OnFullScan" Margin="6">
+                <StackPanel Spacing="14">
+                  <Border Classes="iconbadge" Background="{DynamicResource TintGreen}"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+                  <StackPanel Spacing="4"><TextBlock Text="{Binding [full_scan], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [every_file_on_this_device], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                </StackPanel>
+              </Button>
+              <Button Classes="tile" Click="OnCustomScan" Margin="6">
+                <StackPanel Spacing="14">
+                  <Border Classes="iconbadge" Background="{DynamicResource TintBlue}"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconFolder}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                  <StackPanel Spacing="4"><TextBlock Text="{Binding [custom_scan], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [pick_a_folder_to_check], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                </StackPanel>
+              </Button>
+              <Button Classes="tile" Click="OnProcessScan" Margin="6">
+                <StackPanel Spacing="14">
+                  <Border Classes="iconbadge" Background="#1FE5364B"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconChip}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></Border>
+                  <StackPanel Spacing="4"><TextBlock Text="{Binding [running_programs], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [checks_programs_that_are_running_right_now_including_one], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                </StackPanel>
+              </Button>
+            </UniformGrid>
+
+
+          <UniformGrid Columns="3" Margin="-6,0">
+            <Border Classes="card" Margin="6"><StackPanel Orientation="Horizontal" Spacing="14">
+              <Border Classes="iconbadge" Background="{DynamicResource TintGreen}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [engine], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding EngineInfo}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="150"/></StackPanel></StackPanel></Border>
+            <Border Classes="card" Margin="6"><StackPanel Orientation="Horizontal" Spacing="14">
+              <Border Classes="iconbadge" Background="{DynamicResource TintOrange}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconSearch}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [last_scan], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding LastScan}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/></StackPanel></StackPanel></Border>
+            <Button Classes="tile" Click="OnOpenQuarantine" Margin="6" Padding="20">
+              <StackPanel Orientation="Horizontal" Spacing="14">
+                <Border Classes="iconbadge" Background="{DynamicResource TintBlue}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconLock}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [in_quarantine], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding QuarantineCountText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/></StackPanel>
+              </StackPanel>
+            </Button>
+          </UniformGrid>
+          </StackPanel>
+
+          <!-- live scan / result -->
+          <Border IsVisible="{Binding IsActive}" Background="{Binding ScanGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+            <Grid>
+              <Ellipse Width="340" Height="340" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
+              <Ellipse Width="220" Height="220" Fill="White" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-70,0,0,-110"/>
+              <Grid ColumnDefinitions="Auto,*" Margin="40,36">
+                <Grid Width="230" Height="230" Margin="0,0,40,0" VerticalAlignment="Center">
+                  <Ellipse Classes="pulse" Stroke="White" StrokeThickness="2" IsVisible="{Binding IsScanning}"/>
+                  <Ellipse Stroke="#33FFFFFF" StrokeThickness="14"/>
+                  <Arc IsVisible="{Binding !IsIndeterminate}" StartAngle="-90" SweepAngle="{Binding ProgressAngle}" Stroke="White" StrokeThickness="14" StrokeLineCap="Round"/>
+                  <Ellipse Classes="spin" IsVisible="{Binding IsIndeterminate}" Stroke="White" StrokeThickness="14" StrokeDashArray="3,4"/>
+                  <Ellipse Classes="spinrev" IsVisible="{Binding IsScanning}" Stroke="#66FFFFFF" StrokeThickness="2" StrokeDashArray="2,6" Margin="26"/>
+                  <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" IsVisible="{Binding IsScanning}">
+                    <TextBlock Text="{Binding ProgressText}" Foreground="White" FontSize="50" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding [scanned], Source={x:Static loc:Loc.I}}" Foreground="#CCFFFFFF" FontSize="13" HorizontalAlignment="Center"/>
+                  </StackPanel>
+                  <Viewbox IsVisible="{Binding ShowResultBox}" Width="92" Height="92"><Path Data="{Binding ResultIcon}" Fill="White" Stretch="Uniform"/></Viewbox>
+                </Grid>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                  <Border Background="#33FFFFFF" CornerRadius="20" Padding="12,5" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding [scan_2], Source={x:Static loc:Loc.I}}" Foreground="White" FontSize="11" FontWeight="Bold" LetterSpacing="1"/>
+                  </Border>
+                  <TextBlock Text="{Binding ScanTitle}" Foreground="White" FontSize="30" FontWeight="Bold" TextWrapping="Wrap"/>
+                  <TextBlock Text="{Binding CurrentFile}" Foreground="#E6FFFFFF" FontSize="13" TextTrimming="CharacterEllipsis" IsVisible="{Binding IsScanning}"/>
+                  <TextBlock Text="{Binding ResultText}" Foreground="#E6FFFFFF" FontSize="15" TextWrapping="Wrap" IsVisible="{Binding ShowResultBox}"/>
+                  <UniformGrid Columns="4" Margin="0,8,0,0">
+                    <Border Background="#26FFFFFF" CornerRadius="14" Padding="14,10" Margin="0,0,10,0">
+                      <StackPanel><TextBlock Text="{Binding [scanned_2], Source={x:Static loc:Loc.I}}" Foreground="#CCFFFFFF" FontSize="11" FontWeight="SemiBold"/><TextBlock Text="{Binding ScannedText}" Foreground="White" FontSize="18" FontWeight="Bold"/></StackPanel>
+                    </Border>
+                    <Border Background="#26FFFFFF" CornerRadius="14" Padding="14,10" Margin="0,0,10,0">
+                      <StackPanel><TextBlock Text="{Binding [total_files], Source={x:Static loc:Loc.I}}" Foreground="#CCFFFFFF" FontSize="11" FontWeight="SemiBold"/><TextBlock Text="{Binding TotalText}" Foreground="White" FontSize="18" FontWeight="Bold"/></StackPanel>
+                    </Border>
+                    <Border Background="#26FFFFFF" CornerRadius="14" Padding="14,10" Margin="0,0,10,0">
+                      <StackPanel><TextBlock Text="{Binding [threats], Source={x:Static loc:Loc.I}}" Foreground="#CCFFFFFF" FontSize="11" FontWeight="SemiBold"/><TextBlock Text="{Binding InfectedText}" Foreground="White" FontSize="18" FontWeight="Bold"/></StackPanel>
+                    </Border>
+                    <Border Background="#26FFFFFF" CornerRadius="14" Padding="14,10" Margin="0,0,10,0">
+                      <StackPanel><TextBlock Text="{Binding [time], Source={x:Static loc:Loc.I}}" Foreground="#CCFFFFFF" FontSize="11" FontWeight="SemiBold"/><TextBlock Text="{Binding ElapsedText}" Foreground="White" FontSize="18" FontWeight="Bold"/></StackPanel>
+                    </Border>
+                  </UniformGrid>
+                  <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,10,0,0">
+                    <Button Classes="cta" Content="{Binding [stop_scan], Source={x:Static loc:Loc.I}}" Click="OnCancel" IsVisible="{Binding IsScanning}"/>
+                    <Button Classes="cta" Content="{Binding [move_threats_to_quarantine], Source={x:Static loc:Loc.I}}" Click="OnQuarantineAll" IsVisible="{Binding ShowMoveThreats}"/>
+                    <Button Classes="onhero" Content="{Binding [new_scan], Source={x:Static loc:Loc.I}}" Click="OnNewScan" IsVisible="{Binding !IsScanning}"/>
+                  </StackPanel>
+                </StackPanel>
+              </Grid>
+            </Grid>
+          </Border>
+
+          <Border Classes="card" IsVisible="{Binding ShowClean}">
+            <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [no_threats_found_so_far], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center"/></StackPanel>
+          </Border>
+
+          <Border Classes="card" IsVisible="{Binding HasThreats}">
+            <StackPanel Spacing="12">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding [detected_threats], Source={x:Static loc:Loc.I}}" Classes="h2" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Classes="primary" Content="{Binding [move_all_to_quarantine], Source={x:Static loc:Loc.I}}" Click="OnQuarantineAll" IsEnabled="{Binding !IsScanning}" Padding="18,10"/>
+              </Grid>
+              <ItemsControl ItemsSource="{Binding Threats}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Classes="enter" Background="#1FE5364B" CornerRadius="12" Padding="14,10" Margin="0,0,0,8">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding Virus}" Foreground="#E5364B" FontWeight="SemiBold"/><TextBlock Text="{Binding Path}" Classes="muted" TextTrimming="CharacterEllipsis"/></StackPanel>
+                        <Button Grid.Column="1" Classes="ghost" Content="{Binding [check_online], Source={x:Static loc:Loc.I}}" Click="OnCheckThreat" Padding="14,7" Margin="12,0,0,0"/>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+
+      <!-- TOOLS -->
+      <ScrollViewer Margin="-14,-10,0,0" Padding="14,10,14,0" Classes="page" IsVisible="{Binding IsTools}">
+        <StackPanel Spacing="20">
+
+          <!-- tool picker -->
+          <StackPanel IsVisible="{Binding IsToolsHome}" Spacing="20">
+            <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [tools], Source={x:Static loc:Loc.I}}" Classes="h1"/><TextBlock Text="{Binding [handy_extras_for_keeping_files_safe], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
+            <UniformGrid x:Name="ToolTilesGrid" Columns="3" Margin="-6,0">
+            <Button Classes="tile" Click="OnOpenToolVt" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1F4C6FFF"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconSearch}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [check_a_file_online], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [ask_virustotal_about_a_file_you_re_unsure_of], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#4C6FFF" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolShred" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1FE5364B"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconTrash}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [file_shredder], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [erase_files_for_good], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#E5364B" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolLink" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1FFF7800"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconLink}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [check_a_link], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [see_if_a_web_link_is_safe_before_you_open_it], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolPassword" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1F0FB872"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconKey}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [password_check], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [find_out_if_a_password_has_appeared_in_a_data_breach], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#0FB872" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolStartup" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1F4C6FFF"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconPower}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [startup_programs], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [see_what_starts_when_you_log_in_and_switch_things_off], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#4C6FFF" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolClean" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1FFF7800"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconStorage}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [disk_clean_up], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [free_up_space_by_removing_temporary_files], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolBlock" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1FE5364B"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconBlock}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [block_a_file], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [never_let_a_specific_file_through_even_if_no_one_flags_i], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#E5364B" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            <Button Classes="tile" Click="OnOpenToolEngine" Margin="6">
+              <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+                <Border Grid.Row="0" Classes="iconbadge" Background="#1F4C6FFF"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconGear}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Row="1" Spacing="4"><TextBlock Text="{Binding [engine_details], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [see_what_the_scan_engine_has_loaded_and_whether_it_s_hea], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="6"><TextBlock Text="{Binding [open], Source={x:Static loc:Loc.I}}" Foreground="#4C6FFF" FontWeight="SemiBold"/><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></StackPanel>
+              </Grid>
+            </Button>
+            </UniformGrid>
+          </StackPanel>
+
+          <!-- back button for a single tool -->
+          <Button Classes="ghost" Click="OnToolsBack" HorizontalAlignment="Left" IsVisible="{Binding !IsToolsHome}">
+            <StackPanel Orientation="Horizontal" Spacing="10"><Viewbox Width="14" Height="14"><Path Data="{StaticResource IconArrow}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform" RenderTransform="rotate(180deg)"/></Viewbox><TextBlock Text="{Binding [back_to_tools], Source={x:Static loc:Loc.I}}"/></StackPanel>
+          </Button>
+
+          <!-- check a file online -->
+          <StackPanel IsVisible="{Binding IsToolVt}" Spacing="18">
+            <Border Classes="card"><StackPanel Spacing="18">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Classes="iconbadge" Background="#1F4C6FFF" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconSearch}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [check_a_file_online], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [ask_virustotal_for_a_second_opinion_only_the_file_s_fing], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              </Grid>
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Classes="primary" Content="{Binding [choose_file], Source={x:Static loc:Loc.I}}" Click="OnCheckFileOnline" IsEnabled="{Binding !VtBusy}"/>
+                <Button Classes="ghost" Content="{Binding [add_api_key], Source={x:Static loc:Loc.I}}" Click="OnVtAddKey" IsVisible="{Binding !HasVtKey}"/>
+              </StackPanel>
+              <TextBlock Text="{Binding [you_need_a_free_virustotal_key_first], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" IsVisible="{Binding !HasVtKey}"/>
+            </StackPanel></Border>
+            <Border Classes="card" IsVisible="{Binding HasVtResult}"><StackPanel Spacing="12">
+              <TextBlock Text="{Binding [last_result], Source={x:Static loc:Loc.I}}" Classes="muted"/>
+              <TextBlock Text="{Binding VtFileName}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Text="{Binding VtResultText}" Foreground="{Binding VtResultBrush}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+              <Button Classes="ghost" Content="{Binding [open_on_virustotal], Source={x:Static loc:Loc.I}}" Click="OnVtOpenLink" HorizontalAlignment="Left" IsVisible="{Binding HasVtLink}"/>
+            </StackPanel></Border>
+          </StackPanel>
+
+          <!-- file shredder -->
+          <StackPanel IsVisible="{Binding IsToolShred}" Spacing="18">
+          <Border Classes="card"><StackPanel Spacing="16">
+            <Grid ColumnDefinitions="Auto,*">
+              <Border Classes="iconbadge" Background="#1FE5364B" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconLock}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [file_shredder], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [permanently_erase_files_so_they_can_never_be_recovered_t], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Button Classes="ghost" Content="{Binding [add_files], Source={x:Static loc:Loc.I}}" Click="OnShredAddFiles"/>
+              <Button Classes="ghost" Content="{Binding [add_folder], Source={x:Static loc:Loc.I}}" Click="OnShredAddFolder"/>
+              <Button Classes="ghost" Content="{Binding [clear_list], Source={x:Static loc:Loc.I}}" Click="OnShredClear" IsVisible="{Binding HasShredQueue}"/>
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding ShredQueue}">
+              <ItemsControl.ItemTemplate><DataTemplate><Border Background="{DynamicResource Surface2}" CornerRadius="10" Padding="14,8" Margin="0,0,0,6"><TextBlock Text="{Binding .}" Foreground="{DynamicResource TextMain}" TextTrimming="CharacterEllipsis"/></Border></DataTemplate></ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Spacing="12" IsVisible="{Binding HasShredQueue}">
+              <CheckBox IsChecked="{Binding ShredConfirm}" Content="{Binding [i_understand_these_files_will_be_erased_forever], Source={x:Static loc:Loc.I}}"/>
+              <Button Classes="danger" Content="{Binding [shred_permanently], Source={x:Static loc:Loc.I}}" Click="OnShredNow" IsEnabled="{Binding ShredCanRun}" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Spacing="6" IsVisible="{Binding ShredBusy}">
+              <ProgressBar Value="{Binding ShredProgress}" Maximum="100" Height="8" Foreground="#E5364B" Background="#1FE5364B" CornerRadius="4"/>
+            </StackPanel>
+            <TextBlock Text="{Binding ShredStatus}" Classes="muted" TextWrapping="Wrap"/>
+          </StackPanel></Border>
+          </StackPanel>
+
+          <!-- check a link -->
+          <StackPanel IsVisible="{Binding IsToolLink}" Spacing="18">
+            <Border Classes="card"><StackPanel Spacing="16">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Classes="iconbadge" Background="#1FFF7800" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconLink}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [check_a_link], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [checks_the_link_with_virustotal_the_page_itself_is_never], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              </Grid>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding LinkInput}" PlaceholderText="{Binding [paste_a_web_address], Source={x:Static loc:Loc.I}}" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="1" Classes="primary" Content="{Binding [check_link], Source={x:Static loc:Loc.I}}" Click="OnCheckLink" IsEnabled="{Binding !LinkBusy}" Margin="10,0,0,0" Padding="22,12"/>
+              </Grid>
+              <ProgressBar IsIndeterminate="True" IsVisible="{Binding LinkBusy}" Height="4" Foreground="#FF7800" Background="{DynamicResource TintOrange}"/>
+              <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding !HasVtKey}">
+                <TextBlock Text="{Binding [you_need_a_free_virustotal_key_first], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" VerticalAlignment="Center"/>
+                <Button Classes="ghost" Content="{Binding [add_api_key], Source={x:Static loc:Loc.I}}" Click="OnVtAddKey" Padding="14,7"/>
+              </StackPanel>
+            </StackPanel></Border>
+            <Border Classes="card" IsVisible="{Binding HasLinkResult}"><StackPanel Spacing="10">
+              <TextBlock Text="{Binding LinkShown}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Text="{Binding LinkResultText}" Foreground="{Binding LinkResultBrush}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+            </StackPanel></Border>
+          </StackPanel>
+
+          <!-- password check -->
+          <StackPanel IsVisible="{Binding IsToolPassword}" Spacing="18">
+            <Border Classes="card"><StackPanel Spacing="16">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Classes="iconbadge" Background="#1F0FB872" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconKey}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [password_check], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [your_password_never_leaves_this_computer_only_the_first_], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              </Grid>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding PwInput}" PasswordChar="•" PlaceholderText="{Binding [type_a_password_to_check], Source={x:Static loc:Loc.I}}" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="1" Classes="primary" Content="{Binding [check_password], Source={x:Static loc:Loc.I}}" Click="OnCheckPassword" IsEnabled="{Binding !PwBusy}" Margin="10,0,0,0" Padding="22,12"/>
+              </Grid>
+              <ProgressBar IsIndeterminate="True" IsVisible="{Binding PwBusy}" Height="4" Foreground="#0FB872" Background="{DynamicResource TintGreen}"/>
+            </StackPanel></Border>
+            <Border Classes="card" IsVisible="{Binding HasPwResult}">
+              <TextBlock Text="{Binding PwResultText}" Foreground="{Binding PwResultBrush}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+            </Border>
+          </StackPanel>
+
+          <!-- startup programs -->
+          <StackPanel IsVisible="{Binding IsToolStartup}" Spacing="18">
+            <Border Classes="card"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [startup_programs], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [programs_that_start_by_themselves_when_you_log_in_turnin], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <Button Grid.Column="1" Classes="ghost" Content="{Binding [refresh], Source={x:Static loc:Loc.I}}" Click="OnStartupRefresh" Margin="16,0,0,0"/>
+            </Grid></Border>
+            <ProgressBar IsIndeterminate="True" IsVisible="{Binding StartupBusy}" Height="4" Foreground="#4C6FFF"/>
+            <TextBlock Text="{Binding [nothing_starts_automatically], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasStartup}"/>
+            <ItemsControl ItemsSource="{Binding Startup}">
+              <ItemsControl.ItemTemplate><DataTemplate>
+                <Border Classes="card enter" Padding="18,14" Margin="0,0,0,10"><Grid ColumnDefinitions="*,Auto">
+                  <StackPanel Spacing="2" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding Command}" Classes="muted" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding Note}" Classes="muted" FontSize="12"/>
+                  </StackPanel>
+                  <ToggleSwitch Grid.Column="1" IsChecked="{Binding Enabled}" IsEnabled="{Binding CanChange}" OnContent="" OffContent="" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                </Grid></Border>
+              </DataTemplate></ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+
+          <!-- disk clean-up -->
+          <StackPanel IsVisible="{Binding IsToolClean}" Spacing="18">
+            <Border Classes="card"><StackPanel Spacing="16">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Classes="iconbadge" Background="#1FFF7800" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconStorage}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [disk_clean_up], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [free_up_space_by_removing_temporary_files], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              </Grid>
+              <TextBlock Text="{Binding CleanStatus}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+              <ProgressBar IsIndeterminate="True" IsVisible="{Binding CleanBusy}" Height="4" Foreground="#FF7800" Background="{DynamicResource TintOrange}"/>
+              <ItemsControl ItemsSource="{Binding CleanItems}">
+                <ItemsControl.ItemTemplate><DataTemplate>
+                  <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,10" Margin="0,0,0,8"><Grid ColumnDefinitions="Auto,*,Auto">
+                    <CheckBox IsChecked="{Binding Selected}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding Description}" Classes="muted" FontSize="13" TextWrapping="Wrap"/></StackPanel>
+                    <TextBlock Grid.Column="2" Text="{Binding SizeText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                  </Grid></Border>
+                </DataTemplate></ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Classes="primary" Content="{Binding [clean_selected], Source={x:Static loc:Loc.I}}" Click="OnCleanRun" IsEnabled="{Binding CleanCanRun}"/>
+                <Button Classes="ghost" Content="{Binding [check_again], Source={x:Static loc:Loc.I}}" Click="OnCleanAgain" IsEnabled="{Binding !CleanBusy}"/>
+              </StackPanel>
+            </StackPanel></Border>
+          </StackPanel>
+
+          <!-- block a file -->
+          <StackPanel IsVisible="{Binding IsToolBlock}" Spacing="18">
+            <Border Classes="card"><StackPanel Spacing="16">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Classes="iconbadge" Background="#1FE5364B" Margin="0,0,16,0" VerticalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconBlock}" Fill="#E5364B" Stretch="Uniform"/></Viewbox></Border>
+                <StackPanel Grid.Column="1" Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [block_a_file], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [block_a_file_by_its_fingerprint_clamshield_will_flag_it_], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              </Grid>
+              <Button Classes="primary" Content="{Binding [choose_file_to_block], Source={x:Static loc:Loc.I}}" Click="OnBlockChoose" HorizontalAlignment="Left"/>
+              <TextBlock Text="{Binding [update_the_virus_definitions_first_then_blocking_takes_e], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" TextWrapping="Wrap" IsVisible="{Binding NeedsOwnDb}"/>
+            </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="12">
+              <TextBlock Text="{Binding [blocked_files], Source={x:Static loc:Loc.I}}" Classes="h2"/>
+              <TextBlock Text="{Binding [no_blocked_files_yet], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasBlocked}"/>
+              <ItemsControl ItemsSource="{Binding Blocked}">
+                <ItemsControl.ItemTemplate><DataTemplate>
+                  <Border Classes="enter" Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,10" Margin="0,0,0,8"><Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding FileName}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding Path}" Classes="muted" FontSize="13" TextTrimming="CharacterEllipsis"/><TextBlock Text="{Binding AddedText}" Classes="muted" FontSize="12"/></StackPanel>
+                    <Button Grid.Column="1" Classes="danger" Content="{Binding [remove], Source={x:Static loc:Loc.I}}" Click="OnUnblock" Padding="12,6" Margin="12,0,0,0"/>
+                  </Grid></Border>
+                </DataTemplate></ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel></Border>
+          </StackPanel>
+
+          <!-- engine details -->
+          <StackPanel IsVisible="{Binding IsToolEngine}" Spacing="18">
+            <Border Classes="card"><Grid ColumnDefinitions="*,Auto,Auto">
+              <StackPanel Spacing="3" VerticalAlignment="Center"><TextBlock Text="{Binding [engine_details], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [see_what_the_scan_engine_has_loaded_and_whether_it_s_hea], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <Button Grid.Column="1" Classes="ghost" Content="{Binding [refresh], Source={x:Static loc:Loc.I}}" Click="OnEngineRefresh" Margin="16,0,8,0" IsEnabled="{Binding !EngineBusy}"/>
+              <Button Grid.Column="2" Classes="ghost" Content="{Binding [reload_engine], Source={x:Static loc:Loc.I}}" Click="OnEngineReload" IsEnabled="{Binding !EngineBusy}"/>
+            </Grid></Border>
+            <ProgressBar IsIndeterminate="True" IsVisible="{Binding EngineBusy}" Height="4" Foreground="#4C6FFF"/>
+            <UniformGrid Columns="3" Margin="-6,0">
+            <Border Classes="card" Margin="6"><StackPanel Spacing="3"><TextBlock Text="{Binding [scan_engine], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding EngineVersionLine}" Foreground="{DynamicResource TextMain}" FontSize="22" FontWeight="Bold" TextTrimming="CharacterEllipsis"/></StackPanel></Border>
+            <Border Classes="card" Margin="6"><StackPanel Spacing="3"><TextBlock Text="{Binding [total_signatures], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding EngineTotalText}" Foreground="{DynamicResource TextMain}" FontSize="22" FontWeight="Bold" TextTrimming="CharacterEllipsis"/></StackPanel></Border>
+            <Border Classes="card" Margin="6"><StackPanel Spacing="3"><TextBlock Text="{Binding [daemon_fast_engine], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding DaemonStateText}" Foreground="{DynamicResource TextMain}" FontSize="22" FontWeight="Bold" TextTrimming="CharacterEllipsis"/></StackPanel></Border>
+            </UniformGrid>
+            <Border Classes="card"><StackPanel Spacing="0">
+              <TextBlock Text="{Binding [loaded_databases], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+              <TextBlock Text="{Binding EngineOwnText}" Classes="muted" FontSize="13"/>
+              <TextBlock Text="{Binding EngineFolder}" Classes="muted" FontSize="12" TextTrimming="CharacterEllipsis" Margin="0,0,0,8"/>
+              <ItemsControl ItemsSource="{Binding EngineDbs}">
+                <ItemsControl.ItemTemplate><DataTemplate>
+                  <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding Detail}" Classes="muted" FontSize="12" TextTrimming="CharacterEllipsis"/></StackPanel>
+                    <TextBlock Grid.Column="1" Text="{Binding SigText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                  </Grid></Border>
+                </DataTemplate></ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel></Border>
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+
+      <!-- SETTINGS -->
+      <Grid Classes="page" IsVisible="{Binding IsSettings}" RowDefinitions="Auto,*" ColumnDefinitions="210,*" RowSpacing="18">
+        <TextBlock Grid.ColumnSpan="2" Text="{Binding [settings], Source={x:Static loc:Loc.I}}" Classes="h1"/>
+        <Border Grid.Row="1" Classes="card" Padding="10" VerticalAlignment="Top">
+          <StackPanel Spacing="4">
+            <Button Classes="stab" Classes.active="{Binding IsTabGeneral}" Click="OnTabGeneral">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconGear}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [general], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+            <Button Classes="stab" Classes.active="{Binding IsTabProtection}" Click="OnTabProtection">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconShield}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [protection], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+            <Button Classes="stab" Classes.active="{Binding IsTabScanning}" Click="OnTabScanning">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconSearch}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [scanning], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+            <Button Classes="stab" Classes.active="{Binding IsTabQuarantine}" Click="OnTabQuarantine">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconLock}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [quarantine], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+            <Button Classes="stab" Classes.active="{Binding IsTabHistory}" Click="OnTabHistory">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconClock}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [history], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+            <Button Classes="stab" Classes.active="{Binding IsTabAbout}" Click="OnTabAbout">
+              <StackPanel Orientation="Horizontal" Spacing="12"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconInfo}" Fill="{Binding $parent[Button].Foreground}" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [about], Source={x:Static loc:Loc.I}}" FontWeight="SemiBold"/></StackPanel>
+            </Button>
+          </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Grid.Column="1" Margin="22,0,0,0" MaxWidth="880" HorizontalAlignment="Stretch">
+
+          <ScrollViewer IsVisible="{Binding IsTabGeneral}">
+            <StackPanel Spacing="18" Margin="0,0,6,0">
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [appearance], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [theme], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [choose_a_light_or_dark_look_or_follow_your_system], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ComboBox Grid.Column="1" SelectedIndex="{Binding ThemeIndex}" MinWidth="170" VerticalAlignment="Center"><ComboBoxItem Content="{Binding [follow_system], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [light], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [dark], Source={x:Static loc:Loc.I}}"/></ComboBox>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [language], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [the_language_used_throughout_the_app], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ComboBox Grid.Column="1" SelectedIndex="{Binding LanguageIndex}" MinWidth="170" VerticalAlignment="Center"><ComboBoxItem Content="{Binding [english], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [bahasa_indonesia], Source={x:Static loc:Loc.I}}"/></ComboBox>
+            </Grid></Border>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [system], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [start_with_the_computer], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [clamshield_opens_quietly_at_login_so_protection_is_alway], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoStartEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [keep_running_in_the_tray], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [closing_the_window_keeps_protection_active_needs_a_syste], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding RunInTray}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [desktop_notifications], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [get_alerted_when_a_threat_is_blocked_or_a_scan_finishes], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding NotificationsEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [weekly_summary], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [a_short_report_of_your_protection_every_week], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding WeeklyReport}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row" IsVisible="{Binding ContextMenuSupported}"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [right_click_menu], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [adds_scan_with_clamshield_to_the_file_manager_menu], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ContextMenuEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              </StackPanel></Border>
+              <Border Classes="card"><Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [activity_log], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [every_file_checked_in_real_time_is_recorded_in_a_log_fil], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <Button Grid.Column="1" Classes="ghost" Content="{Binding [open_log_file], Source={x:Static loc:Loc.I}}" Click="OnOpenRtLog" Margin="16,0,0,0" VerticalAlignment="Center"/>
+              </Grid></Border>
+              <Border Classes="card"><StackPanel Spacing="12">
+                <StackPanel Spacing="2"><TextBlock Text="{Binding [update_log], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [technical_details_of_the_latest_update_useful_if_somethi], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <Border Background="{DynamicResource LogBg}" CornerRadius="12" Padding="14" Height="200">
+                  <ScrollViewer><TextBlock Text="{Binding UpdateLog}" FontFamily="Consolas,Menlo,monospace" FontSize="12" Foreground="#B8C2D6" TextWrapping="Wrap"/></ScrollViewer>
+                </Border>
+              </StackPanel></Border>
+            </StackPanel>
+          </ScrollViewer>
+
+          <ScrollViewer IsVisible="{Binding IsTabProtection}">
+            <StackPanel Spacing="18" Margin="0,0,6,0">
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [real_time_protection], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [watch_downloads_and_desktop], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [new_and_changed_files_are_scanned_the_moment_they_appear], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding RealTimeEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [isolate_threats_automatically], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [infected_files_are_moved_to_quarantine_without_asking], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding AutoQuarantine}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [scan_usb_drives_when_connected], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [flash_drives_and_external_disks_are_checked_as_soon_as_y], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ScanRemovable}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [watch_email_downloads], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [also_checks_the_folders_used_by_mail_apps_such_as_thunde], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding WatchEmail}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [tell_me_when_a_file_is_safe], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [show_a_small_notice_after_a_new_file_is_checked_and_foun], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding NotifyClean}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row" IsVisible="{Binding RealTimeEnabled}"><StackPanel Spacing="12">
+              <StackPanel Spacing="2"><TextBlock Text="{Binding [pause_real_time_protection], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [switches_off_for_a_while_then_turns_itself_back_on], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding CanPause}">
+                <Button Classes="ghost" Content="{Binding [15_minutes], Source={x:Static loc:Loc.I}}" Click="OnPause15"/>
+                <Button Classes="ghost" Content="{Binding [1_hour], Source={x:Static loc:Loc.I}}" Click="OnPause60"/>
+                <Button Classes="ghost" Content="{Binding [until_restart], Source={x:Static loc:Loc.I}}" Click="OnPauseRestart"/>
+              </StackPanel>
+              <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsPaused}">
+                <TextBlock Text="{Binding PauseText}" Foreground="#FF7800" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <Button Grid.Column="1" Classes="primary" Content="{Binding [resume], Source={x:Static loc:Loc.I}}" Click="OnResumeProtection" Padding="20,8" Margin="12,0,0,0"/>
+              </Grid>
+            </StackPanel></Border>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="14">
+                <Grid ColumnDefinitions="*,Auto">
+                  <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [more_folders_to_watch], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [add_other_folders_you_want_checked_in_real_time], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                  <Button Grid.Column="1" Classes="ghost" Content="{Binding [add_folder], Source={x:Static loc:Loc.I}}" Click="OnAddWatchFolder"/>
+                </Grid>
+                <TextBlock Text="{Binding [no_extra_folders_added], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasWatchFolders}"/>
+                <ItemsControl ItemsSource="{Binding WatchFolders}">
+                  <ItemsControl.ItemTemplate><DataTemplate>
+                    <Border Background="{DynamicResource Surface2}" CornerRadius="10" Padding="14,8" Margin="0,0,0,6"><Grid ColumnDefinitions="*,Auto">
+                      <TextBlock Text="{Binding .}" Foreground="{DynamicResource TextMain}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                      <Button Grid.Column="1" Classes="danger" Content="{Binding [remove], Source={x:Static loc:Loc.I}}" Click="OnRemoveWatchFolder" Padding="12,6" Margin="12,0,0,0"/>
+                    </Grid></Border>
+                  </DataTemplate></ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [ransomware_shield], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [warn_me_about_mass_file_changes], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [alerts_you_if_many_documents_or_photos_are_changed_or_re], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding RansomwareEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [startup_watch], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [warn_me_when_startup_items_change], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [checks_startup_entries_scheduled_jobs_ssh_keys_and_shell], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding PersistenceEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [scheduled_scan], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [scan_automatically], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [runs_a_quick_scan_on_a_schedule_while_clamshield_is_open], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ScheduleEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <StackPanel Spacing="14" IsVisible="{Binding ScheduleEnabled}">
+              <StackPanel Orientation="Horizontal" Spacing="12">
+                <ComboBox SelectedIndex="{Binding FrequencyIndex}" MinWidth="140"><ComboBoxItem Content="{Binding [every_day], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [every_week], Source={x:Static loc:Loc.I}}"/></ComboBox>
+                <ComboBox SelectedIndex="{Binding DayIndex}" MinWidth="140" IsVisible="{Binding IsWeekly}">
+                  <ComboBoxItem Content="{Binding [monday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [tuesday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [wednesday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [thursday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [friday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [saturday], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [sunday], Source={x:Static loc:Loc.I}}"/>
+                </ComboBox>
+                <TimePicker SelectedTime="{Binding ScheduleTime}" ClockIdentifier="24HourClock" MinuteIncrement="5"/>
+              </StackPanel>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [update_virus_definitions_first], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [downloads_the_latest_signatures_before_each_scheduled_sc], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding UpdateBeforeScheduled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              <TextBlock Text="{Binding NextRunText}" Foreground="#FF7800" FontWeight="SemiBold"/>
+            </StackPanel>
+              </StackPanel></Border>
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [smart_pausing], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [wait_while_on_battery], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [scheduled_scans_are_postponed_until_the_charger_is_plugg], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding PauseOnBattery}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [wait_during_full_screen_apps], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [scheduled_scans_never_interrupt_games_videos_or_presenta], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding PauseFullscreen}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              </StackPanel></Border>
+            </StackPanel>
+          </ScrollViewer>
+
+          <ScrollViewer IsVisible="{Binding IsTabScanning}">
+            <StackPanel Spacing="18" Margin="0,0,6,0">
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [scan_options], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [look_inside_archives], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [also_checks_files_inside_zip_rar_and_similar_archives], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ScanArchives}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [largest_file_to_scan], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [bigger_files_are_skipped_to_keep_scans_fast], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ComboBox Grid.Column="1" SelectedIndex="{Binding MaxSizeIndex}" MinWidth="170" VerticalAlignment="Center"><ComboBoxItem Content="{Binding [25_mb], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [50_mb], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [100_mb], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [250_mb], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [500_mb], Source={x:Static loc:Loc.I}}"/></ComboBox>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [skip_photos_music_and_videos], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [faster_scans_these_file_types_rarely_carry_malware], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding SkipMedia}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [strict_detection], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [also_flags_adware_risky_office_macros_and_password_prote], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding StrictDetection}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+            <Border Classes="row"><Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center" Margin="0,0,18,0"><TextBlock Text="{Binding [extra_virus_signatures], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [adds_small_community_lists_from_sanesecurity_for_office_], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ExtraSignatures}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid></Border>
+              </StackPanel></Border>
+            <Border Classes="card"><StackPanel Spacing="14">
+              <StackPanel Spacing="2"><TextBlock Text="{Binding [my_scan_profiles], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [save_the_folders_you_check_often_and_scan_them_in_one_cl], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ItemsControl ItemsSource="{Binding Profiles}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,10" Margin="0,0,0,8">
+                      <Grid ColumnDefinitions="*,Auto,Auto">
+                        <StackPanel Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding Summary}" Classes="muted" FontSize="13" TextTrimming="CharacterEllipsis"/></StackPanel>
+                        <Button Grid.Column="1" Classes="ghost" Content="{Binding [scan], Source={x:Static loc:Loc.I}}" Click="OnRunProfile" Padding="16,7" Margin="12,0,8,0"/>
+                        <Button Grid.Column="2" Classes="danger" Content="{Binding [delete], Source={x:Static loc:Loc.I}}" Click="OnDeleteProfile" Padding="14,7"/>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBox Text="{Binding ProfileName}" PlaceholderText="{Binding [profile_name_optional], Source={x:Static loc:Loc.I}}" VerticalContentAlignment="Center"/>
+                <Button Grid.Column="1" Classes="ghost" Content="{Binding [choose_folders_and_save], Source={x:Static loc:Loc.I}}" Click="OnAddProfile" Margin="10,0,0,0"/>
+              </Grid>
+            </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="14">
+                <Grid ColumnDefinitions="*,Auto,Auto">
+                  <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [exclusions], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [files_and_folders_skipped_by_scans_and_real_time_protect], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                  <Button Grid.Column="1" Classes="ghost" Content="{Binding [add_folder], Source={x:Static loc:Loc.I}}" Click="OnAddExcludeFolder" Margin="12,0,8,0"/>
+                  <Button Grid.Column="2" Classes="ghost" Content="{Binding [add_file], Source={x:Static loc:Loc.I}}" Click="OnAddExcludeFile"/>
+                </Grid>
+                <TextBlock Text="{Binding [no_exclusions_added], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasExclusions}"/>
+                <ItemsControl ItemsSource="{Binding Exclusions}">
+                  <ItemsControl.ItemTemplate><DataTemplate>
+                    <Border Background="{DynamicResource Surface2}" CornerRadius="10" Padding="14,8" Margin="0,0,0,6"><Grid ColumnDefinitions="*,Auto">
+                      <TextBlock Text="{Binding .}" Foreground="{DynamicResource TextMain}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                      <Button Grid.Column="1" Classes="danger" Content="{Binding [remove], Source={x:Static loc:Loc.I}}" Click="OnRemoveExclusion" Padding="12,6" Margin="12,0,0,0"/>
+                    </Grid></Border>
+                  </DataTemplate></ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="14">
+                <StackPanel Spacing="2"><TextBlock Text="{Binding [trusted_files], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [files_you_marked_as_safe_are_never_flagged_again_even_if], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <TextBlock Text="{Binding [no_trusted_files_yet], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasTrusted}"/>
+                <ItemsControl ItemsSource="{Binding Trusted}">
+                  <ItemsControl.ItemTemplate><DataTemplate>
+                    <Border Background="{DynamicResource Surface2}" CornerRadius="10" Padding="14,8" Margin="0,0,0,6"><Grid ColumnDefinitions="*,Auto">
+                      <TextBlock Text="{Binding Path}" Foreground="{DynamicResource TextMain}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                      <Button Grid.Column="1" Classes="danger" Content="{Binding [remove], Source={x:Static loc:Loc.I}}" Click="OnRemoveTrusted" Padding="12,6" Margin="12,0,0,0"/>
+                    </Grid></Border>
+                  </DataTemplate></ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="14">
+                <Grid ColumnDefinitions="*,Auto">
+                  <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [yara_rules], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [add_detection_rules_written_in_the_yara_format_clamshiel], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                  <Button Grid.Column="1" Classes="ghost" Content="{Binding [add_rule_file], Source={x:Static loc:Loc.I}}" Click="OnYaraAdd" Margin="16,0,0,0"/>
+                </Grid>
+                <TextBlock Text="{Binding [no_rules_added], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasYara}"/>
+                <TextBlock Text="{Binding [update_the_virus_definitions_first_then_rules_take_effec], Source={x:Static loc:Loc.I}}" Foreground="#FF7800" TextWrapping="Wrap" IsVisible="{Binding NeedsOwnDb}"/>
+                <ItemsControl ItemsSource="{Binding Yara}">
+                  <ItemsControl.ItemTemplate><DataTemplate>
+                    <Border Classes="enter" Background="{DynamicResource Surface2}" CornerRadius="10" Padding="14,8" Margin="0,0,0,6"><Grid ColumnDefinitions="*,Auto">
+                      <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextMain}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                      <Button Grid.Column="1" Classes="danger" Content="{Binding [remove], Source={x:Static loc:Loc.I}}" Click="OnYaraRemove" Padding="12,6" Margin="12,0,0,0"/>
+                    </Grid></Border>
+                  </DataTemplate></ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="12">
+                <StackPanel Spacing="2"><TextBlock Text="{Binding [virustotal], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [paste_a_free_api_key_from_virustotal_com_to_double_check], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+                <TextBox Text="{Binding VtKey}" PasswordChar="•" PlaceholderText="{Binding [api_key], Source={x:Static loc:Loc.I}}" VerticalContentAlignment="Center"/>
+              </StackPanel></Border>
+            </StackPanel>
+          </ScrollViewer>
+
+          <!-- Quarantine -->
+          <Border Classes="card" IsVisible="{Binding IsTabQuarantine}">
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="14">
+              <TextBlock Text="{Binding [isolated_files_can_t_harm_your_device_restore_them_only_], Source={x:Static loc:Loc.I}}" Classes="muted"/>
+              <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding [delete_quarantined_files_automatically_after], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" SelectedIndex="{Binding RetentionIndex}" MinWidth="150"><ComboBoxItem Content="{Binding [never], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [7_days], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [30_days], Source={x:Static loc:Loc.I}}"/><ComboBoxItem Content="{Binding [90_days], Source={x:Static loc:Loc.I}}"/></ComboBox>
+              </Grid>
+              <Grid Grid.Row="2">
+                <StackPanel IsVisible="{Binding QuarantineEmpty}" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
+                  <Border Width="84" Height="84" CornerRadius="42" Background="{DynamicResource TintGreen}" HorizontalAlignment="Center"><Viewbox Width="40" Height="40"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+                  <TextBlock Text="{Binding [nothing_in_quarantine], Source={x:Static loc:Loc.I}}" Classes="h2" HorizontalAlignment="Center"/>
+                  <TextBlock Text="{Binding [threats_you_isolate_will_show_up_here], Source={x:Static loc:Loc.I}}" Classes="muted" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <ScrollViewer>
+                  <ItemsControl ItemsSource="{Binding Quarantined}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Classes="enter" Background="{DynamicResource Surface2}" CornerRadius="14" Padding="16" Margin="0,0,0,10">
+                          <StackPanel Spacing="12">
+                            <StackPanel Spacing="2">
+                              <TextBlock Text="{Binding FileName}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/>
+                              <TextBlock Text="{Binding Virus}" Foreground="#E5364B"/>
+                              <TextBlock Text="{Binding OriginalPath}" Classes="muted" TextTrimming="CharacterEllipsis"/>
+                              <TextBlock Text="{Binding DateText}" Classes="muted" FontSize="13"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                              <Button Classes="ghost" Content="{Binding [restore], Source={x:Static loc:Loc.I}}" Click="OnRestore"/>
+                              <Button Classes="ghost" Content="{Binding [restore_and_trust], Source={x:Static loc:Loc.I}}" Click="OnRestoreTrust"/>
+                              <Button Classes="ghost" Content="{Binding [check_online], Source={x:Static loc:Loc.I}}" Click="OnCheckQuarantined"/>
+                              <Button Classes="danger" Content="{Binding [delete], Source={x:Static loc:Loc.I}}" Click="OnDelete"/>
+                            </StackPanel>
+                          </StackPanel>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </ScrollViewer>
+              </Grid>
+            </Grid>
+          </Border>
+
+          <!-- About -->
+          <ScrollViewer IsVisible="{Binding IsTabAbout}">
+            <StackPanel Spacing="18" Margin="0,0,6,0">
+              <Border Classes="card"><StackPanel Spacing="18">
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                  <Image Source="/Assets/icon.png" Width="68" Height="68"/>
+                  <StackPanel VerticalAlignment="Center" Spacing="2">
+                    <TextBlock Text="Clamshield" Classes="h1"/>
+                    <TextBlock Text="{Binding AppVersionText}" Classes="muted"/>
+                  </StackPanel>
+                </StackPanel>
+                <TextBlock Text="{Binding [a_friendly_antivirus_interface_built_on_clamav], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" TextWrapping="Wrap"/>
+              </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="0">
+                <TextBlock Text="{Binding [powered_by_clamav], Source={x:Static loc:Loc.I}}" Classes="h2" Margin="0,0,0,4"/>
+                <Border Classes="row"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding [scan_engine_version], Source={x:Static loc:Loc.I}}" Classes="muted" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding EngineVersionText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/></Grid></Border>
+                <Border Classes="row"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding [virus_database_version], Source={x:Static loc:Loc.I}}" Classes="muted" VerticalAlignment="Center"/><TextBlock Grid.Column="1" Text="{Binding DbVersionText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/></Grid></Border>
+                <Border Classes="row"><TextBlock Text="{Binding [free_open_source_engine], Source={x:Static loc:Loc.I}}" Classes="muted"/></Border>
+              </StackPanel></Border>
+
+              <Border Classes="card"><StackPanel Spacing="10">
+                <TextBlock Text="{Binding [credits], Source={x:Static loc:Loc.I}}" Classes="h2"/>
+                <TextBlock Text="{Binding [clamav_the_scanning_engine_gpl_2_0_license], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [plus_jakarta_sans_the_app_font_sil_open_font_license], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [avalonia_the_interface_toolkit_mit_license], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [online_services_you_can_turn_on], Source={x:Static loc:Loc.I}}" Classes="h2" FontSize="14" Margin="0,10,0,0"/>
+                <TextBlock Text="{Binding [virustotal_for_second_opinions_on_files_and_links], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [have_i_been_pwned_for_the_password_check], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [sanesecurity_for_the_optional_extra_virus_signatures], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding [clamshield_is_an_independent_app_and_isn_t_made_or_endor], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap" Margin="0,8,0,0"/>
+              </StackPanel></Border>
+            </StackPanel>
+          </ScrollViewer>
+
+          <!-- History -->
+          <Border Classes="card" IsVisible="{Binding IsTabHistory}">
+            <Grid RowDefinitions="Auto,*" RowSpacing="14">
+              <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="{Binding [every_scan_and_real_time_detection_is_recorded_here], Source={x:Static loc:Loc.I}}" Classes="muted" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Classes="ghost" Content="{Binding [export_report], Source={x:Static loc:Loc.I}}" Click="OnExport"/>
+              </Grid>
+              <Grid Grid.Row="1">
+                <StackPanel IsVisible="{Binding HistoryEmpty}" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
+                  <Border Width="84" Height="84" CornerRadius="42" Background="{DynamicResource TintOrange}" HorizontalAlignment="Center"><Viewbox Width="40" Height="40"><Path Data="{StaticResource IconClock}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+                  <TextBlock Text="{Binding [no_scans_yet], Source={x:Static loc:Loc.I}}" Classes="h2" HorizontalAlignment="Center"/>
+                  <TextBlock Text="{Binding [your_first_scan_will_appear_here], Source={x:Static loc:Loc.I}}" Classes="muted" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <ScrollViewer>
+                  <ItemsControl ItemsSource="{Binding History}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate>
+                        <Border Classes="enter" Background="{DynamicResource Surface2}" CornerRadius="14" Padding="16" Margin="0,0,0,10">
+                          <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Border Classes="iconbadge" Background="{Binding BadgeColor}" Margin="0,0,14,0"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconShield}" Fill="{Binding StatusColor}" Stretch="Uniform"/></Viewbox></Border>
+                            <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
+                              <TextBlock Text="{Binding TypeText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/>
+                              <TextBlock Text="{Binding Summary}" Classes="muted"/>
+                              <TextBlock Text="{Binding DateText}" Classes="muted" FontSize="13"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="{Binding StatusText}" Foreground="{Binding StatusColor}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                          </Grid>
+                        </Border>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </ScrollViewer>
+              </Grid>
+            </Grid>
+          </Border>
+        </Grid>
+      </Grid>
+
+      <!-- UPDATE -->
+      <ScrollViewer Margin="-14,-10,0,0" Padding="14,10,14,0" Classes="page" IsVisible="{Binding IsUpdate}">
+        <StackPanel Spacing="20">
+          <TextBlock Text="{Binding [updates], Source={x:Static loc:Loc.I}}" Classes="h1"/>
+
+          <Border Background="{Binding UpdateGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+            <Grid>
+              <Ellipse Width="320" Height="320" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
+              <Ellipse Width="200" Height="200" Fill="White" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-60,0,0,-100"/>
+              <Grid ColumnDefinitions="Auto,*" Margin="40,34">
+                <Grid Width="150" Height="150" Margin="0,0,36,0" VerticalAlignment="Center">
+                  <Ellipse Classes="pulse" Stroke="White" StrokeThickness="2" IsVisible="{Binding IsUpdating}"/>
+                  <Ellipse Stroke="#33FFFFFF" StrokeThickness="10"/>
+                  <Arc IsVisible="{Binding UpdateArc}" StartAngle="-90" SweepAngle="{Binding UpdateAngle}" Stroke="White" StrokeThickness="10" StrokeLineCap="Round"/>
+                  <Ellipse Classes="spin" IsVisible="{Binding UpdateSpin}" Stroke="White" StrokeThickness="10" StrokeDashArray="3,4"/>
+                  <TextBlock IsVisible="{Binding UpdateArc}" Text="{Binding UpdatePercentText}" Foreground="White" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                  <Viewbox IsVisible="{Binding UpdateSpin}" Width="44" Height="44"><Path Classes="breathe" Data="{StaticResource IconRefresh}" Fill="White" Stretch="Uniform"/></Viewbox>
+                  <Viewbox IsVisible="{Binding !IsUpdating}" Width="70" Height="70"><Path Data="{Binding UpdateIcon}" Fill="White" Stretch="Uniform"/></Viewbox>
+                </Grid>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
+                  <TextBlock Text="{Binding UpdateHeadline}" Foreground="White" FontSize="30" FontWeight="Bold" TextWrapping="Wrap"/>
+                  <TextBlock Text="{Binding UpdateStatus}" Foreground="#E6FFFFFF" FontSize="15" TextWrapping="Wrap"/>
+                  <Border BoxShadow="0 10 24 0 #33000000" CornerRadius="12" HorizontalAlignment="Left" Margin="0,10,0,0">
+                    <Button Classes="cta" Content="{Binding UpdateButtonText}" Click="OnUpdate" IsEnabled="{Binding !IsUpdating}"/>
+                  </Border>
+                </StackPanel>
+              </Grid>
+            </Grid>
+          </Border>
+
+          <UniformGrid Columns="3" Margin="-6,0">
+            <Border Classes="card" Margin="6"><StackPanel Orientation="Horizontal" Spacing="14">
+              <Border Classes="iconbadge" Background="{DynamicResource TintGreen}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconShield}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [virus_database], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding DbVersionText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="170"/></StackPanel></StackPanel></Border>
+            <Border Classes="card" Margin="6"><StackPanel Orientation="Horizontal" Spacing="14">
+              <Border Classes="iconbadge" Background="{DynamicResource TintOrange}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconClock}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [last_checked], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding LastUpdateText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="170"/></StackPanel></StackPanel></Border>
+            <Border Classes="card" Margin="6"><StackPanel Orientation="Horizontal" Spacing="14">
+              <Border Classes="iconbadge" Background="{DynamicResource TintBlue}"><Viewbox Width="20" Height="20"><Path Data="{StaticResource IconGear}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel VerticalAlignment="Center" Spacing="2"><TextBlock Text="{Binding [scan_engine], Source={x:Static loc:Loc.I}}" Classes="muted"/><TextBlock Text="{Binding EngineVersionText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="170"/></StackPanel></StackPanel></Border>
+          </UniformGrid>
+
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+
+    <!-- drag & drop overlay -->
+    <Border Grid.ColumnSpan="2" IsVisible="{Binding IsDragOver}" IsHitTestVisible="False" Background="{DynamicResource DragOverlay}" Classes="page">
+      <Grid Margin="28">
+        <Rectangle RadiusX="28" RadiusY="28" Stroke="#FF7800" StrokeThickness="3" StrokeDashArray="6,5" Fill="{DynamicResource TintOrange}"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="14">
+          <Border Width="96" Height="96" CornerRadius="48" Background="{DynamicResource PrimaryGradient}" HorizontalAlignment="Center"><Viewbox Width="44" Height="44"><Path Data="{StaticResource IconSearch}" Fill="White" Stretch="Uniform"/></Viewbox></Border>
+          <TextBlock Text="{Binding [drop_to_scan], Source={x:Static loc:Loc.I}}" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+          <TextBlock Text="{Binding [release_files_or_folders_anywhere_in_this_window], Source={x:Static loc:Loc.I}}" Classes="muted" HorizontalAlignment="Center"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+    <!-- first-run wizard -->
+    <Border Grid.ColumnSpan="2" IsVisible="{Binding IsWizard}" Background="{DynamicResource BgApp}">
+      <Grid>
+        <Ellipse Width="720" Height="720" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-300,-240,0" Opacity="0.16">
+          <Ellipse.Fill><LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%"><GradientStop Color="#FFA24D" Offset="0"/><GradientStop Color="#FF6A00" Offset="1"/></LinearGradientBrush></Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Width="520" Height="520" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-200,0,0,-240" Fill="#0FB872" Opacity="0.10"/>
+
+        <Border Width="640" MinHeight="470" VerticalAlignment="Center" HorizontalAlignment="Center" Classes="card" Padding="48,40" BoxShadow="0 24 60 0 #1F0F1B3A" CornerRadius="28">
+          <StackPanel Spacing="30">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8"><Border Classes="dot" Classes.active="{Binding IsStep0}"/><Border Classes="dot" Classes.active="{Binding IsStep1}"/><Border Classes="dot" Classes.active="{Binding IsStep2}"/><Border Classes="dot" Classes.active="{Binding IsStep3}"/><Border Classes="dot" Classes.active="{Binding IsStep4}"/></StackPanel>
+
+            <!-- 0 · welcome -->
+            <StackPanel Classes="page" IsVisible="{Binding IsStep0}" Spacing="22" HorizontalAlignment="Center">
+              <Grid Width="120" Height="120" HorizontalAlignment="Center">
+                <Ellipse Classes="pulse" Stroke="#FF7800" StrokeThickness="2"/>
+                <Ellipse Classes="pulse2" Stroke="#FF7800" StrokeThickness="2"/>
+                <Image Source="/Assets/icon.png" Width="104" Height="104"/>
+              </Grid>
+              <StackPanel Spacing="8"><TextBlock Text="{Binding [welcome_to_clamshield], Source={x:Static loc:Loc.I}}" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding [powerful_free_antivirus_protection_set_up_in_about_a_min], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="15" TextWrapping="Wrap" TextAlignment="Center" MaxWidth="420"/></StackPanel>
+              <Button Classes="primary" Content="{Binding [get_started], Source={x:Static loc:Loc.I}}" Click="OnWizardNext" HorizontalAlignment="Center" Padding="44,14"/>
+            </StackPanel>
+
+            <!-- 1 · engine -->
+            <StackPanel Classes="page" IsVisible="{Binding IsStep1}" Spacing="22">
+              <Border Width="84" Height="84" CornerRadius="42" Background="{DynamicResource TintOrange}" HorizontalAlignment="Center"><Viewbox Width="40" Height="40"><Path Data="{StaticResource IconShield}" Fill="#FF7800" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel Spacing="8">
+                <TextBlock Text="{Binding [setting_up_the_scan_engine], Source={x:Static loc:Loc.I}}" FontSize="26" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding WizardStatus}" Classes="muted" FontSize="14" TextAlignment="Center" TextWrapping="Wrap"/>
+              </StackPanel>
+              <ProgressBar Value="{Binding WizardProgress}" Maximum="100" IsIndeterminate="{Binding WizardIndeterminate}" Height="10" Foreground="#FF7800" Background="{DynamicResource TintOrange}" CornerRadius="5"/>
+              <TextBlock Text="{Binding WizardPercentText}" Foreground="#FF7800" FontSize="34" FontWeight="Bold" HorizontalAlignment="Center" IsVisible="{Binding !WizardIndeterminate}"/>
+              <TextBlock Text="{Binding WizardDetail}" Classes="muted" FontSize="13" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Text="{Binding WizardError}" Foreground="#E5364B" TextWrapping="Wrap" TextAlignment="Center" IsVisible="{Binding HasWizardError}"/>
+              <Button Classes="primary" Content="{Binding [try_again], Source={x:Static loc:Loc.I}}" Click="OnWizardRetry" HorizontalAlignment="Center" IsVisible="{Binding HasWizardError}"/>
+            </StackPanel>
+
+            <!-- 2 · definitions -->
+            <StackPanel Classes="page" IsVisible="{Binding IsStep2}" Spacing="22">
+              <Border Width="84" Height="84" CornerRadius="42" Background="{DynamicResource TintBlue}" HorizontalAlignment="Center"><Viewbox Width="40" Height="40"><Path Data="{StaticResource IconRefresh}" Fill="#4C6FFF" Stretch="Uniform"/></Viewbox></Border>
+              <StackPanel Spacing="8">
+                <TextBlock Text="{Binding [getting_the_latest_protection], Source={x:Static loc:Loc.I}}" FontSize="26" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding WizardStatus}" Classes="muted" FontSize="14" TextAlignment="Center" TextWrapping="Wrap"/>
+              </StackPanel>
+              <ProgressBar Value="{Binding WizardProgress}" Maximum="100" IsIndeterminate="{Binding WizardIndeterminate}" Height="10" Foreground="#FF7800" Background="{DynamicResource TintOrange}" CornerRadius="5"/>
+              <TextBlock Text="{Binding WizardPercentText}" Foreground="#FF7800" FontSize="34" FontWeight="Bold" HorizontalAlignment="Center" IsVisible="{Binding !WizardIndeterminate}"/>
+              <TextBlock Text="{Binding WizardDetail}" Classes="muted" FontSize="13" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Text="{Binding WizardError}" Foreground="#E5364B" TextWrapping="Wrap" TextAlignment="Center" IsVisible="{Binding HasWizardError}"/>
+              <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" IsVisible="{Binding HasWizardError}">
+                <Button Classes="primary" Content="{Binding [try_again], Source={x:Static loc:Loc.I}}" Click="OnWizardRetry"/>
+                <Button Classes="ghost" Content="{Binding [skip_for_now], Source={x:Static loc:Loc.I}}" Click="OnWizardNext" IsVisible="{Binding WizardCanSkip}"/>
+              </StackPanel>
+            </StackPanel>
+
+            <!-- 3 · preferences -->
+            <StackPanel Classes="page" IsVisible="{Binding IsStep3}" Spacing="20">
+              <StackPanel Spacing="8">
+                <TextBlock Text="{Binding [choose_your_protection], Source={x:Static loc:Loc.I}}" FontSize="26" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding [we_picked_sensible_defaults_you_can_change_these_any_tim], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="14" TextAlignment="Center"/>
+              </StackPanel>
+              <StackPanel Spacing="16">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [real_time_protection], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [check_new_downloads_and_files_the_moment_they_appear], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding RealTimeEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [scan_usb_drives], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [check_flash_drives_and_external_disks_when_you_plug_them], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ScanRemovable}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding [weekly_automatic_scan], Source={x:Static loc:Loc.I}}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold"/><TextBlock Text="{Binding [a_quick_scan_runs_by_itself_so_you_never_have_to_remembe], Source={x:Static loc:Loc.I}}" Classes="muted" TextWrapping="Wrap"/></StackPanel>
+              <ToggleSwitch Grid.Column="1" IsChecked="{Binding ScheduleEnabled}" OnContent="" OffContent="" VerticalAlignment="Center"/>
+            </Grid>
+              </StackPanel>
+              <Button Classes="primary" Content="{Binding [continue], Source={x:Static loc:Loc.I}}" Click="OnWizardNext" HorizontalAlignment="Center" Padding="44,14"/>
+            </StackPanel>
+
+            <!-- 4 · done -->
+            <StackPanel Classes="page" IsVisible="{Binding IsStep4}" Spacing="22" HorizontalAlignment="Center">
+              <Grid Width="120" Height="120" HorizontalAlignment="Center">
+                <Ellipse Classes="pulse" Stroke="#0FB872" StrokeThickness="2"/>
+                <Border CornerRadius="48" Background="#0FB872" Width="96" Height="96" BoxShadow="0 12 28 0 #550FB872"><Viewbox Width="52" Height="52"><Path Classes="breathe" Data="{StaticResource IconShield}" Fill="White" Stretch="Uniform"/></Viewbox></Border>
+              </Grid>
+              <StackPanel Spacing="8"><TextBlock Text="{Binding [you_re_all_set], Source={x:Static loc:Loc.I}}" FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextMain}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding [clamshield_is_ready_to_keep_your_device_safe], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="15" TextAlignment="Center"/></StackPanel>
+              <Button Classes="primary" Content="{Binding [open_clamshield], Source={x:Static loc:Loc.I}}" Click="OnWizardFinish" HorizontalAlignment="Center" Padding="44,14"/>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
