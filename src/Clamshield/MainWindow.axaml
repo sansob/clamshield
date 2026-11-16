@@ -39,30 +39,30 @@
 
       <!-- HOME -->
       <ScrollViewer Margin="-14,-10,0,0" Padding="14,10,14,0" Classes="page" IsVisible="{Binding IsHome}">
-        <StackPanel Spacing="22">
+        <StackPanel Spacing="12">
 
-          <Border Background="{Binding HeroGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+          <Border Background="{Binding HeroGradient}" CornerRadius="20" ClipToBounds="True">
             <Grid>
-              <Ellipse Width="340" Height="340" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
-              <Ellipse Width="220" Height="220" Fill="White" Opacity="0.07" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,230,-110"/>
-              <Grid ColumnDefinitions="*,Auto" Margin="40,36">
-                <StackPanel Spacing="12" VerticalAlignment="Center">
+              <Ellipse Width="230" Height="230" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-120,-60,0" IsHitTestVisible="False"/>
+              <Ellipse Width="150" Height="150" Fill="White" Opacity="0.07" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,260,-90" IsHitTestVisible="False"/>
+              <Grid ColumnDefinitions="*,Auto,Auto" Margin="22,10">
+                <StackPanel Spacing="6" VerticalAlignment="Center">
                   <Border Background="#33FFFFFF" CornerRadius="20" Padding="12,5" HorizontalAlignment="Left">
                     <TextBlock Text="{Binding [protection_status], Source={x:Static loc:Loc.I}}" Foreground="White" FontSize="11" FontWeight="Bold" LetterSpacing="1"/>
                   </Border>
-                  <TextBlock Text="{Binding HeroTitle}" Foreground="White" FontSize="32" FontWeight="Bold" TextWrapping="Wrap"/>
-                  <TextBlock Text="{Binding HeroSubtitle}" Foreground="#E6FFFFFF" FontSize="15" TextWrapping="Wrap" MaxWidth="460" HorizontalAlignment="Left"/>
-                  <Border BoxShadow="0 10 24 0 #33000000" CornerRadius="12" HorizontalAlignment="Left" Margin="0,10,0,0">
-                    <Button Classes="cta" Click="OnSmartScan">
-                      <StackPanel Orientation="Horizontal" Spacing="10"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconBolt}" Fill="#FF7800" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [run_smart_scan], Source={x:Static loc:Loc.I}}"/></StackPanel>
-                    </Button>
-                  </Border>
+                  <TextBlock Text="{Binding HeroTitle}" Foreground="White" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
+                  <TextBlock Text="{Binding HeroSubtitle}" Foreground="#E6FFFFFF" FontSize="14" TextWrapping="Wrap" MaxWidth="460" HorizontalAlignment="Left"/>
                 </StackPanel>
-                <Grid Grid.Column="1" Width="170" Height="170" Margin="24,0,10,0">
+                <Border CornerRadius="12" Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
+                  <Button Classes="cta" Click="OnSmartScan">
+                    <StackPanel Orientation="Horizontal" Spacing="10"><Viewbox Width="18" Height="18"><Path Data="{StaticResource IconBolt}" Fill="#FF7800" Stretch="Uniform"/></Viewbox><TextBlock Text="{Binding [run_smart_scan], Source={x:Static loc:Loc.I}}"/></StackPanel>
+                  </Button>
+                </Border>
+                <Grid Grid.Column="2" Width="84" Height="84" Margin="20,0,6,0">
                   <Ellipse Stroke="White" StrokeThickness="2"/>
                   <Ellipse Stroke="White" StrokeThickness="2"/>
                   <Ellipse Fill="#26FFFFFF" Stroke="#55FFFFFF" StrokeThickness="2"/>
-                  <Viewbox Width="84" Height="84"><Path Data="{Binding HeroIcon}" Fill="White" Stretch="Uniform"/></Viewbox>
+                  <Viewbox Width="40" Height="40"><Path Data="{Binding HeroIcon}" Fill="White" Stretch="Uniform"/></Viewbox>
                 </Grid>
               </Grid>
             </Grid>
@@ -81,8 +81,8 @@
 
           <Border Classes="card" Padding="0" ClipToBounds="True">
             <StackPanel>
-              <Grid ColumnDefinitions="Auto,*,Auto" Margin="24,22,24,18">
-                <Grid Width="48" Height="48" Margin="0,0,18,0" VerticalAlignment="Center">
+              <Grid ColumnDefinitions="Auto,*,Auto" Margin="20,10,20,10">
+                <Grid Width="40" Height="40" Margin="0,0,14,0" VerticalAlignment="Center">
                   <Ellipse Stroke="#0FB872" StrokeThickness="2" IsVisible="{Binding RealTimeEnabled}"/>
                   <Border Classes="iconbadge" Background="{DynamicResource TintGreen}" HorizontalAlignment="Center"><Viewbox Width="22" Height="22"><Path Data="{StaticResource IconBolt}" Fill="#0FB872" Stretch="Uniform"/></Viewbox></Border>
                 </Grid>
@@ -97,17 +97,17 @@
                 </StackPanel>
               </Grid>
 
-              <Border Margin="24,0,24,20" IsVisible="{Binding IsPaused}" Background="{DynamicResource TintOrange}" CornerRadius="12" Padding="16,12">
+              <Border Margin="20,0,20,12" IsVisible="{Binding IsPaused}" Background="{DynamicResource TintOrange}" CornerRadius="12" Padding="16,12">
                 <Grid ColumnDefinitions="*,Auto">
                   <TextBlock Text="{Binding PauseText}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"/>
                   <Button Grid.Column="1" Classes="primary" Content="{Binding [resume], Source={x:Static loc:Loc.I}}" Click="OnResumeProtection" Padding="20,8" Margin="12,0,0,0"/>
                 </Grid>
               </Border>
-              <Border Margin="24,0,24,22" IsVisible="{Binding !RealTimeEnabled}">
+              <Border Margin="20,0,20,12" IsVisible="{Binding !RealTimeEnabled}">
                 <Button Classes="ghost" Content="{Binding [go_to_settings], Source={x:Static loc:Loc.I}}" Click="OnGoRealTimeSettings" HorizontalAlignment="Left"/>
               </Border>
               <StackPanel IsVisible="{Binding ShowRtDetails}">
-                <Border Background="{DynamicResource Surface2}" Padding="24,14">
+                <Border Background="{DynamicResource Surface2}" Padding="20,6">
                   <Grid ColumnDefinitions="*,Auto">
                     <StackPanel VerticalAlignment="Center" Spacing="2">
                       <TextBlock Text="{Binding [now_checking], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/>
@@ -129,13 +129,13 @@
                 </Border>
                 <ProgressBar IsIndeterminate="True" IsVisible="{Binding RtBusy}" Height="3" Foreground="#0FB872" Background="Transparent" CornerRadius="0"/>
 
-                <StackPanel Margin="24,16,24,22" Spacing="10">
+                <StackPanel Margin="20,8,20,8" Spacing="4">
                   <Grid ColumnDefinitions="*,Auto">
-                    <StackPanel VerticalAlignment="Center" Spacing="1"><TextBlock Text="{Binding [activity_log], Source={x:Static loc:Loc.I}}" Classes="h2"/><TextBlock Text="{Binding [light_on_your_system_low_priority_small_batches], Source={x:Static loc:Loc.I}}" Classes="muted" FontSize="12"/></StackPanel>
+                    <StackPanel VerticalAlignment="Center" Spacing="1"><TextBlock Text="{Binding [activity_log], Source={x:Static loc:Loc.I}}" Classes="h2"/></StackPanel>
                     <Button Grid.Column="1" Classes="ghost" Content="{Binding [clear], Source={x:Static loc:Loc.I}}" Click="OnClearRtLog" Padding="12,6"/>
                   </Grid>
-                  <TextBlock Text="{Binding [nothing_yet_new_files_will_show_up_here_as_they_re_check], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasRtLog}" Margin="0,6"/>
-                  <ScrollViewer MaxHeight="210" IsVisible="{Binding HasRtLog}">
+                  <TextBlock Text="{Binding [nothing_yet_new_files_will_show_up_here_as_they_re_check], Source={x:Static loc:Loc.I}}" Classes="muted" IsVisible="{Binding !HasRtLog}" Margin="0,2"/>
+                  <ScrollViewer MaxHeight="96" VerticalScrollBarVisibility="Hidden" IsVisible="{Binding HasRtLog}">
                     <ItemsControl ItemsSource="{Binding RtLog}">
                       <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -159,24 +159,24 @@
             </StackPanel>
           </Border>
 
-          <UniformGrid Columns="2" Margin="-6,0">
-            <Border Classes="card" Margin="6">
-              <StackPanel Spacing="14">
+          <UniformGrid Columns="2" Margin="-4,0">
+            <Border Classes="card" Margin="4" Padding="16,12">
+              <StackPanel Spacing="6">
                 <Grid ColumnDefinitions="Auto,*">
-                  <Grid Width="92" Height="92" Margin="0,0,18,0">
-                    <Ellipse Stroke="#1F808080" StrokeThickness="9"/>
-                    <Arc StartAngle="-90" SweepAngle="{Binding HealthAngle}" Stroke="{Binding HealthBrush}" StrokeThickness="9" StrokeLineCap="Round"/>
-                    <TextBlock Text="{Binding HealthScoreText}" Foreground="{DynamicResource TextMain}" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                  <Grid Width="56" Height="56" Margin="0,0,14,0">
+                    <Ellipse Stroke="#1F808080" StrokeThickness="7"/>
+                    <Arc StartAngle="-90" SweepAngle="{Binding HealthAngle}" Stroke="{Binding HealthBrush}" StrokeThickness="7" StrokeLineCap="Round"/>
+                    <TextBlock Text="{Binding HealthScoreText}" Foreground="{DynamicResource TextMain}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                   </Grid>
                   <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
                     <TextBlock Text="{Binding [security_health], Source={x:Static loc:Loc.I}}" Classes="muted"/>
-                    <TextBlock Text="{Binding HealthLabel}" Foreground="{Binding HealthBrush}" FontSize="22" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding HealthLabel}" Foreground="{Binding HealthBrush}" FontSize="18" FontWeight="Bold"/>
                   </StackPanel>
                 </Grid>
                 <ItemsControl ItemsSource="{Binding Health}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                      <Border Background="{DynamicResource Surface2}" CornerRadius="12" Padding="14,10" Margin="0,0,0,8">
+                      <Border Background="{DynamicResource Surface2}" CornerRadius="10" Padding="12,6" Margin="0,0,0,4">
                         <Grid ColumnDefinitions="*,Auto">
                           <StackPanel Spacing="1" VerticalAlignment="Center"><TextBlock Text="{Binding Title}" Foreground="{DynamicResource TextMain}" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock Text="{Binding Hint}" Classes="muted" FontSize="13" TextWrapping="Wrap"/></StackPanel>
                           <Button Grid.Column="1" Classes="ghost" Content="{Binding ActionText}" Click="OnFixHealth" Padding="14,7" Margin="12,0,0,0"/>
@@ -191,20 +191,20 @@
                 </StackPanel>
               </StackPanel>
             </Border>
-            <Border Classes="card" Margin="6">
-              <StackPanel Spacing="14">
+            <Border Classes="card" Margin="4" Padding="16,12">
+              <StackPanel Spacing="8">
                 <TextBlock Text="{Binding [last_7_days], Source={x:Static loc:Loc.I}}" Classes="h2"/>
                 <UniformGrid Columns="2">
                   <StackPanel><TextBlock Text="{Binding WeekFiles, StringFormat={}{0:N0}}" Foreground="{DynamicResource TextMain}" FontSize="26" FontWeight="Bold"/><TextBlock Text="{Binding [files_checked], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
                   <StackPanel><TextBlock Text="{Binding WeekThreats}" Foreground="#E5364B" FontSize="26" FontWeight="Bold"/><TextBlock Text="{Binding [threats_found], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
                 </UniformGrid>
-                <ItemsControl ItemsSource="{Binding Week}" Height="140">
+                <ItemsControl ItemsSource="{Binding Week}" Height="78">
                   <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Rows="1"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
                   <ItemsControl.ItemTemplate>
                     <DataTemplate>
                       <StackPanel VerticalAlignment="Bottom" Spacing="6" Margin="3,0">
                         <Ellipse Width="6" Height="6" Fill="#E5364B" IsVisible="{Binding HasThreat}"/>
-                        <Border Height="{Binding BarHeight}" Width="24" CornerRadius="7" HorizontalAlignment="Center" Background="{DynamicResource PrimaryGradient}"/>
+                        <Border Height="{Binding CompactBar}" Width="24" CornerRadius="7" HorizontalAlignment="Center" Background="{DynamicResource PrimaryGradient}"/>
                         <TextBlock Text="{Binding Label}" Classes="muted" FontSize="12" HorizontalAlignment="Center"/>
                       </StackPanel>
                     </DataTemplate>
@@ -223,7 +223,7 @@
           <!-- chooser (no scan running) -->
           <StackPanel IsVisible="{Binding IsIdle}" Spacing="18">
             <StackPanel Spacing="4"><TextBlock Text="{Binding [scan], Source={x:Static loc:Loc.I}}" Classes="h1"/><TextBlock Text="{Binding [choose_what_you_d_like_to_check_you_can_also_drag_files_], Source={x:Static loc:Loc.I}}" Classes="muted"/></StackPanel>
-            <Border Background="{DynamicResource PrimaryGradient}" CornerRadius="22" Padding="32" BoxShadow="0 14 30 0 #33FF7800">
+            <Border Background="{DynamicResource PrimaryGradient}" CornerRadius="22" Padding="32">
               <Grid ColumnDefinitions="*,Auto">
                 <StackPanel Spacing="6" VerticalAlignment="Center">
                   <TextBlock Text="{Binding [smart_scan], Source={x:Static loc:Loc.I}}" Foreground="White" FontSize="24" FontWeight="Bold"/>
@@ -277,9 +277,9 @@
           </StackPanel>
 
           <!-- live scan / result -->
-          <Border IsVisible="{Binding IsActive}" Background="{Binding ScanGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+          <Border IsVisible="{Binding IsActive}" Background="{Binding ScanGradient}" CornerRadius="26" ClipToBounds="True">
             <Grid>
-              <Ellipse Width="340" Height="340" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
+              <Ellipse Width="230" Height="230" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-120,-60,0" IsHitTestVisible="False"/>
               <Ellipse Width="220" Height="220" Fill="White" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-70,0,0,-110"/>
               <Grid ColumnDefinitions="Auto,*" Margin="40,36">
                 <Grid Width="230" Height="230" Margin="0,0,40,0" VerticalAlignment="Center">
@@ -1011,7 +1011,7 @@
         <StackPanel Spacing="20">
           <TextBlock Text="{Binding [updates], Source={x:Static loc:Loc.I}}" Classes="h1"/>
 
-          <Border Background="{Binding UpdateGradient}" CornerRadius="26" ClipToBounds="True" BoxShadow="0 16 36 0 #2E000000">
+          <Border Background="{Binding UpdateGradient}" CornerRadius="26" ClipToBounds="True">
             <Grid>
               <Ellipse Width="320" Height="320" Fill="White" Opacity="0.09" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-130,-70,0"/>
               <Ellipse Width="200" Height="200" Fill="White" Opacity="0.07" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-60,0,0,-100"/>
@@ -1028,7 +1028,7 @@
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="10">
                   <TextBlock Text="{Binding UpdateHeadline}" Foreground="White" FontSize="30" FontWeight="Bold" TextWrapping="Wrap"/>
                   <TextBlock Text="{Binding UpdateStatus}" Foreground="#E6FFFFFF" FontSize="15" TextWrapping="Wrap"/>
-                  <Border BoxShadow="0 10 24 0 #33000000" CornerRadius="12" HorizontalAlignment="Left" Margin="0,10,0,0">
+                  <Border CornerRadius="12" HorizontalAlignment="Left" Margin="0,10,0,0">
                     <Button Classes="cta" Content="{Binding UpdateButtonText}" Click="OnUpdate" IsEnabled="{Binding !IsUpdating}"/>
                   </Border>
                 </StackPanel>

@@ -103,7 +103,6 @@
       <Setter Property="Padding" Value="20"/>
       <Setter Property="BorderBrush" Value="{DynamicResource BorderSoft}"/>
       <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="BoxShadow" Value="0 6 20 0 #120F1B3A"/>
     </Style>
     <Style Selector="Border.iconbadge"><Setter Property="Width" Value="46"/><Setter Property="Height" Value="46"/><Setter Property="CornerRadius" Value="14"/><Setter Property="HorizontalAlignment" Value="Left"/></Style>
 

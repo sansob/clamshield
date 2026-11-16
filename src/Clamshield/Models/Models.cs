@@ -102,7 +102,11 @@ public class ScanProfile
         Paths.Count == 1 ? Paths[0] : $"{Paths.Count} folders";
 }
 
-public record DayStat(string Label, int Files, int Threats, double BarHeight, bool HasThreat);
+public record DayStat(string Label, int Files, int Threats, double BarHeight, bool HasThreat)
+{
+    /// <summary>Bar height for the compact chart on the overview (the HTML report uses the full <see cref="BarHeight"/>).</summary>
+    public double CompactBar => BarHeight * 0.46;
+}
 
 public record HealthIssue(string Title, string Hint, string Action, string ActionText);
 
