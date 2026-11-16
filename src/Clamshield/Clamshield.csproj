@@ -4,17 +4,24 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Memory: a background antivirus should stay small. -->
+    <TieredPGO>false</TieredPGO>
+    <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
   </PropertyGroup>
+
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="7" />
+    <RuntimeHostConfigurationOption Include="System.GC.RetainVM" Value="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <PackageReference Include="Avalonia" Version="12.1.6" />
     <PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.6" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.6" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
