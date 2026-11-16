@@ -13,11 +13,15 @@ namespace Clamshield;
 
 public partial class MainWindow : Window
 {
-    public MainViewModel Vm { get; } = new();
+    public MainViewModel Vm { get; }
     WindowNotificationManager? _toasts;
 
-    public MainWindow()
+    /// <summary>Only for the XAML previewer. The app always passes the one shared view model.</summary>
+    public MainWindow() : this(new MainViewModel()) { }
+
+    public MainWindow(MainViewModel vm)
     {
+        Vm = vm;
         InitializeComponent();
         DataContext = Vm;
         SizeChanged += (_, e) => ApplyResponsive(e.NewSize.Width);
@@ -39,12 +43,10 @@ public partial class MainWindow : Window
         Opened += (_, _) =>
         {
             if (Environment.GetEnvironmentVariable("CLAMSHIELD_SHOTS") is { Length: > 0 } shotDir) _ = RunShots(shotDir);
-            if (App.StartInBackground && Vm.RunInTray && !Vm.IsWizard) { Hide(); Vm.WindowVisible = false; }
             _toasts = new WindowNotificationManager(this) { Position = NotificationPosition.BottomRight, MaxItems = 3 };
-            Vm.Toast += (title, msg, warn) =>
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                    _toasts?.Show(new Notification(title, msg, warn ? NotificationType.Warning : NotificationType.Success)));
+            Vm.Toast += OnToast;
         };
+        Closed += (_, _) => { Vm.Toast -= OnToast; _toasts = null; };
     }
 
     /// <summary>Wide windows get more tiles per row so cards don't stretch into mostly empty space.</summary>
@@ -55,31 +57,21 @@ public partial class MainWindow : Window
         if (this.FindControl<UniformGrid>("ToolTilesGrid") is { } tools) tools.Columns = wide ? 4 : 3;
     }
 
-    /// <summary>Hands memory back after the window goes to the tray, so the idle app stays small.</summary>
-    static void ReleaseMemory() => _ = Task.Delay(1500).ContinueWith(_ =>
-    {
-        System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
-        GC.Collect(2, GCCollectionMode.Aggressive, blocking: true, compacting: true);
-    });
-
-    public void ShowFromTray()
-    {
-        Show();
-        if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal;
-        Activate();
-        Vm.WindowVisible = true;
-    }
+    void OnToast(string title, string msg, bool warn) =>
+        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            _toasts?.Show(new Notification(title, msg, warn ? NotificationType.Warning : NotificationType.Success)));
 
     protected override void OnClosing(WindowClosingEventArgs e)
     {
-        if (!App.Quitting && Vm.RunInTray)
+        if (!App.Quitting && Vm.RunInTray && App.TrayAvailable)
         {
-            e.Cancel = true;      // keep protecting in the background
-            Hide();
+            // Keep protecting in the background, but let the window itself go: its render surfaces and
+            // controls are most of the memory. The app builds a new one when it is opened again.
             Vm.WindowVisible = false;
-            ReleaseMemory();
+            base.OnClosing(e);
             return;
         }
+        App.Quitting = true;
         Vm.Shutdown();
         base.OnClosing(e);
     }

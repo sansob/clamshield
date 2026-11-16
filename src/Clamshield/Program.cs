@@ -21,7 +21,12 @@ class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .With(new X11PlatformOptions { WmClass = Clamshield.Services.LinuxIntegration.AppId })
+            .With(new X11PlatformOptions
+            {
+                WmClass = Clamshield.Services.LinuxIntegration.AppId,
+                // Software drawing: the GL path loads Mesa and LLVM, about 60 MB the app does not need.
+                RenderingMode = new[] { X11RenderingMode.Software },
+            })
 #if DEBUG
             .WithDeveloperTools()
 #endif
