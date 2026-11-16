@@ -55,6 +55,13 @@ public partial class MainWindow : Window
         if (this.FindControl<UniformGrid>("ToolTilesGrid") is { } tools) tools.Columns = wide ? 4 : 3;
     }
 
+    /// <summary>Hands memory back after the window goes to the tray, so the idle app stays small.</summary>
+    static void ReleaseMemory() => _ = Task.Delay(1500).ContinueWith(_ =>
+    {
+        System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+        GC.Collect(2, GCCollectionMode.Aggressive, blocking: true, compacting: true);
+    });
+
     public void ShowFromTray()
     {
         Show();
@@ -70,6 +77,7 @@ public partial class MainWindow : Window
             e.Cancel = true;      // keep protecting in the background
             Hide();
             Vm.WindowVisible = false;
+            ReleaseMemory();
             return;
         }
         Vm.Shutdown();

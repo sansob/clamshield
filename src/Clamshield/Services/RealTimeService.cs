@@ -166,7 +166,7 @@ public sealed class RealTimeService : IDisposable
         if (exe == null) return null;
         var psi = new ProcessStartInfo(exe) { RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true };
         psi.ArgumentList.Add("--no-summary");
-        if (fast) psi.ArgumentList.Add("--config-file=" + ClamdService.Conf);
+        if (fast) { psi.ArgumentList.Add("--config-file=" + ClamdService.Conf); foreach (var a in ClamdService.ClientArgs) psi.ArgumentList.Add(a); }
         else { foreach (var a in ClamAvLocator.DbArgs()) psi.ArgumentList.Add(a); foreach (var a in ScanOptions.ClamscanArgs()) psi.ArgumentList.Add(a); }
         psi.ArgumentList.Add("--file-list=" + listFile);
 

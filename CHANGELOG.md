@@ -4,6 +4,11 @@ All notable changes to Clamshield are listed here. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+### Changed
+- Uses the ClamAV daemon that is already running on the system when this user can reach it, instead of starting a second one. This saves about 1 GB of memory. A private daemon is still started when none is available, or when strict mode, extra signature lists or an app-owned database are in use.
+- Lower memory use in the app itself: workstation garbage collection without background threads, no profile-guided tiering, and memory is handed back when the window goes to the tray.
+- The unused Inter font is no longer bundled.
+
 ## [1.0.0] - 2026-11-16
 
 First public release.

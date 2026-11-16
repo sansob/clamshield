@@ -75,7 +75,7 @@ public static class ScanService
                     UseShellExecute = false, CreateNoWindow = true,
                 };
                 psi.ArgumentList.Add("--no-summary");
-                if (fast) { psi.ArgumentList.Add("--config-file=" + ClamdService.Conf); psi.ArgumentList.Add("--multiscan"); }
+                if (fast) { psi.ArgumentList.Add("--config-file=" + ClamdService.Conf); psi.ArgumentList.Add("--multiscan"); foreach (var a in ClamdService.ClientArgs) psi.ArgumentList.Add(a); }
                 else { foreach (var a in ClamAvLocator.DbArgs()) psi.ArgumentList.Add(a); foreach (var a in ScanOptions.ClamscanArgs()) psi.ArgumentList.Add(a); }
                 psi.ArgumentList.Add("--file-list=" + list);
 
