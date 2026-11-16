@@ -14,7 +14,7 @@ dotnet run --project src/Clamshield   # start the app
 dotnet test                           # run the unit tests
 ```
 
-Open `Clamshield.sln` in Rider, Visual Studio or VS Code with the C# extension. Avalonia's previewer works with the XAML files.
+Open `Clamshield.slnx` in Rider, Visual Studio or VS Code with the C# extension. Avalonia's previewer works with the XAML files.
 
 A debug build starts the Avalonia developer tools. Press F12 in the running window.
 
