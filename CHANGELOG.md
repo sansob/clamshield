@@ -4,6 +4,8 @@ All notable changes to Clamshield are listed here. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-16
+
 ## [1.0.2] - 2026-11-16
 
 ### Changed
