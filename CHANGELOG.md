@@ -4,7 +4,16 @@ All notable changes to Clamshield are listed here. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-16
+
 ## [1.0.2] - 2026-11-16
+
+### Changed
+- Closing the window to the tray now really closes it, and the app builds a new one when you open it again. When Clamshield starts in the background it creates no window at all. Protection, scheduled scans and the tray keep running. In a test on Linux the idle app used about 73 MB instead of about 126 MB.
+- On Linux the window is drawn in software. This stops the graphics driver and LLVM from being loaded, which saved about 50 MB.
+- While it sits in the tray, the app hands unused memory back every few minutes.
+- The Overview page is more compact and fits in the default window without scrolling.
+- Scrolling is lighter: the blurred drop shadows behind cards and banners, which had to be redrawn on every scroll step, are gone. Set `CLAMSHIELD_GL=1` on Linux to draw with the GPU again if you prefer smoother animation to lower memory use.
 
 ### Changed
 - The Linux x64 build is now a native AOT build. In a first-run comparison it used about 25% less memory (177 MB instead of 235 MB), and the program file is 28 MB instead of 99 MB. SkiaSharp and HarfBuzz now sit next to the program, and the installer copies them. Other systems keep the self-contained build for now.
