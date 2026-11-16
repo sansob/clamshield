@@ -21,14 +21,14 @@ public static class QuarantineService
 
     public static List<QuarantineItem> Load()
     {
-        try { return File.Exists(Index) ? JsonSerializer.Deserialize<List<QuarantineItem>>(File.ReadAllText(Index)) ?? new() : new(); }
+        try { return File.Exists(Index) ? JsonSerializer.Deserialize(File.ReadAllText(Index), AppJson.Info<List<QuarantineItem>>()) ?? new() : new(); }
         catch { return new(); }
     }
 
     static void Save(List<QuarantineItem> items)
     {
         AppData.EnsureDir(Dir); AppData.Secure(Dir, true);
-        File.WriteAllText(Index, JsonSerializer.Serialize(items));
+        File.WriteAllText(Index, JsonSerializer.Serialize(items, AppJson.Info<List<QuarantineItem>>()));
         AppData.Secure(Index);
     }
 

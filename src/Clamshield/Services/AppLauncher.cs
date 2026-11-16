@@ -16,7 +16,9 @@ public static class AppLauncher
             {
                 var a0 = Environment.GetCommandLineArgs().FirstOrDefault();
                 if (!string.IsNullOrEmpty(a0) && a0.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)) dll = Path.GetFullPath(a0);
+#pragma warning disable IL3000   // only reached when started through "dotnet Clamshield.dll", never in a single-file or AOT build
                 dll ??= Assembly.GetEntryAssembly()?.Location;
+#pragma warning restore IL3000
             }
             catch { }
             if (!string.IsNullOrEmpty(dll)) return (exe, new[] { dll });

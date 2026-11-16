@@ -12,7 +12,7 @@ public static class PersistenceWatch
     private const string BaselineFile = "persistence.json";
     private static readonly object Gate = new();
 
-    private sealed class BaselineData
+    internal sealed class BaselineData
     {
         public bool Exists { get; set; }
         public Dictionary<string, string> Entries { get; set; } = new();

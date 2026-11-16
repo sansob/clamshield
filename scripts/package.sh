@@ -26,7 +26,7 @@ case "$RID" in
     STAGE="$WORK/$NAME"
     mkdir -p "$STAGE"
     cp -a "$SRC"/. "$STAGE/"
-    rm -f "$STAGE"/*.pdb
+    rm -f "$STAGE"/*.pdb "$STAGE"/*.dbg
     chmod +x "$STAGE/Clamshield"
     cp "$ROOT/scripts/linux/install.sh" "$ROOT/scripts/linux/uninstall.sh" "$STAGE/"
     chmod +x "$STAGE/install.sh" "$STAGE/uninstall.sh"

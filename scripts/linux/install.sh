@@ -8,7 +8,8 @@ BIN="$HOME/.local/bin"
 DATA="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 mkdir -p "$PREFIX" "$BIN" "$DATA/applications" "$DATA/icons/hicolor/scalable/apps" "$DATA/icons/hicolor/512x512/apps"
-cp -a "$HERE/Clamshield" "$PREFIX/Clamshield"
+# The native AOT build keeps SkiaSharp and HarfBuzz next to the program, so copy those too.
+for f in "$HERE"/Clamshield "$HERE"/*.so; do [ -e "$f" ] && cp -a "$f" "$PREFIX/"; done
 chmod +x "$PREFIX/Clamshield"
 ln -sf "$PREFIX/Clamshield" "$BIN/clamshield"
 

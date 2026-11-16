@@ -4,6 +4,12 @@ All notable changes to Clamshield are listed here. The format follows [Keep a Ch
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-16
+
+### Changed
+- The Linux x64 build is now a native AOT build. In a first-run comparison it used about 25% less memory (177 MB instead of 235 MB), and the program file is 28 MB instead of 99 MB. SkiaSharp and HarfBuzz now sit next to the program, and the installer copies them. Other systems keep the self-contained build for now.
+- Settings, history and lists are stored with generated JSON code, and all bindings are compiled, which native AOT requires.
+
 ## [1.0.1] - 2026-11-16
 
 ### Changed
